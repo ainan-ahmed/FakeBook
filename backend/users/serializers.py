@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('id', 'username', 'email', 'first_name',
-                  'last_name', 'date_of_birth')
+                  'last_name', 'date_of_birth', 'gender')
 
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -30,6 +30,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
             'date_of_birth': self.validated_data.get('date_of_birth', ''),
+            'gender': self.validated_data.get('gender', ''),
         }
 
     def save(self, request):
@@ -42,6 +43,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.fname = self.cleaned_data.get('fname')
         user.lname = self.cleaned_data.get('lname')
         user.date_of_birth = self.cleaned_data.get('date_of_birth')
+        user.gender = self.cleaned_data.get('gender')
         user.save()
 
         return user

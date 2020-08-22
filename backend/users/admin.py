@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 class CustomUserAdmin(UserAdmin):
     # controls the fields to be listed in django admin
     list_display = ['username', 'first_name',
-                    'last_name', 'email', 'date_of_birth']
+                    'last_name', 'email', 'date_of_birth','gender']
 
 
 admin.site.register(get_user_model(), CustomUserAdmin)
