@@ -8,5 +8,7 @@ from rest_framework.routers import SimpleRouter
 
 
 urlpatterns = [
-        path('<int:pk>/',UserDetail.as_view())
+    path('<username>/', UserDetail.as_view()),
+    path('<username>/profile/', AuthUserDetail.as_view()),
+    
     ]

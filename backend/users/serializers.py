@@ -4,22 +4,67 @@ from .models import *
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
+from posts.models import Post, Comment
+from follow.models import Followers
+
+
+class PostCommentSerializer(serializers.ModelSerializer):
+    posted_by = serializers.StringRelatedField()
+
+    class Meta:
+        model = Comment
+        fields = ('data_created', 'body', 'posted_by')
+
+
+class UserPostSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    users_like = serializers.StringRelatedField(many=True)
+    comments = PostCommentSerializer(many=True)
+
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+
+class FollowerSerializer(serializers.ModelSerializer):
+    follower = serializers.StringRelatedField(many=True)
+    class Meta:
+        model = Followers
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
+    posts = UserPostSerializer(many=True, read_only=True)
+    #followers = FollowerSerializer(many=True, read_only=True)
 
     class Meta:
         model = get_user_model()
+        lookup_field = "username"
         fields = ('id', 'username', 'email', 'first_name',
-                  'last_name', 'date_of_birth', 'gender')
+                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 'posts', 'followers')
+
+
+class AuthUserSerializer(serializers.ModelSerializer):
+    posts = UserPostSerializer(many=True)
+    followers = FollowerSerializer(many=True)
+
+    class Meta:
+        model = get_user_model()
+        lookup_field = "username"
+        fields = '__all__'
 
 
 class CustomRegisterSerializer(RegisterSerializer):
+    GENDER_CHOICES = (
+        ('male', 'Male'),
+        ('female', 'Female')
+    )
     first_name = serializers.CharField(
         max_length=20, required=True, label='First Name')
     last_name = serializers.CharField(
         max_length=20, required=True, label='Last Name')
     date_of_birth = serializers.DateField(required=True)
+    gender = serializers.ChoiceField(required=True, choices=GENDER_CHOICES)
 
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()

@@ -7,7 +7,7 @@ from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from .permissions import IsUser
+from .permissions import IsAuthUser
 
 # class UserViewSet(viewsets.ModelViewSet):
 #     queryset = get_user_model().objects.all()
@@ -18,7 +18,14 @@ from .permissions import IsUser
 #     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+class UserDetail(generics.RetrieveAPIView):
+    lookup_field = "username"
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    permission_class = IsUser
+    permission_classes = (permissions.AllowAny,)
+
+class AuthUserDetail(generics.RetrieveUpdateDestroyAPIView):
+    lookup_field = "username"
+    queryset = get_user_model().objects.all()
+    serializer_class = AuthUserSerializer
+    permission_classes = (IsAuthUser,)
