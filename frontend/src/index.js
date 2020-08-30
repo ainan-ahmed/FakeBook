@@ -6,12 +6,17 @@ import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import configureStore from "./store/configureStore";
+import { Provider } from "react-redux";
+const store = configureStore();
 ReactDOM.render(
-  <React.StrictMode>
+ // <React.StrictMode>
     <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
+      <Provider store={store}>
+      <App/>
+      </Provider>
+    </BrowserRouter>,
+  //</React.StrictMode>,
   document.getElementById("root")
 );
 

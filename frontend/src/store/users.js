@@ -1,6 +1,11 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { loginEndpoint, get_user, logout_user } from "./endpoints";
+import {
+  loginEndpoint,
+  get_user,
+  logout_user,
+  registrationEndpoint,
+} from "./endpoints";
 
 const slice = createSlice({
   name: "users",
@@ -16,7 +21,8 @@ const slice = createSlice({
     },
     authSucceed: (state, action) => {
       state.isLoading = false;
-      state.user = action.payload
+      state.isAuthenticated = true;
+      state.user = action.payload;
     },
     authFailed: (state, action) => {
       localStorage.removeItem("token");
@@ -31,7 +37,8 @@ const slice = createSlice({
     loginSucceed: (state, action) => {
       localStorage.setItem("token", action.payload.key);
       state.isLoading = false;
-      (state.isAuthenticated = true), (state.token = action.payload.key);
+      state.isAuthenticated = true;
+      state.token = action.payload.key;
     },
     loginFailed: (state, action) => {
       localStorage.removeItem("token");
@@ -53,7 +60,8 @@ const slice = createSlice({
     registerSucceed: (state, action) => {
       localStorage.setItem("token", action.payload.key);
       state.isLoading = false;
-      (state.isAuthenticated = true), (state.token = action.payload.key);
+      state.isAuthenticated = true;
+      state.token = action.payload.key;
     },
     registerFailed: (state, action) => {
       state.isAuthenticated = false;
@@ -73,11 +81,32 @@ export const {
   logoutSucceed,
   registerRequested,
   registerFailed,
-  registerSucceed
+  registerSucceed,
 } = slice.actions;
-export default slice.reducers;
+export default slice.reducer;
 
 //ACTIONs
+
+//--------------------------------
+export const getUserInfo = () => async (dispatch, getState) => {
+  dispatch({
+    type: authRequested.type,
+  });
+  //console.log("head =>"+ getHeaders(getState) )
+  try {
+    // console.log("head =>")
+    const response = await axios.get(get_user, getHeaders(getState));
+    //console.log("->> "+response.data);
+    dispatch({
+      type: authSucceed.type,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: authFailed.type,
+    });
+  }
+};
 
 //-----------------------------
 
@@ -90,87 +119,87 @@ export const login = (email, password) => async (dispatch, getState) => {
       email,
       password,
     });
+    //console.log(response.data);
     dispatch({
       type: loginSucceed.type,
-      payload: response.data
-    })
+      payload: response.data,
+    });
 
-
+    //console.log("HELLO");
+    dispatch(getUserInfo());
+    //console.log("HELLO");
   } catch (error) {
-
     dispatch({
-      type: loginFailed.type
-    })
+      type: loginFailed.type,
+    });
   }
 };
 //-------------------------------
 
-export const getUserInfo = () => async (dispatch, getState) => {
-  dispatch({
-      type: authRequested.type
-  })
-  try {
-    const response = await axios.get(get_user, getHeaders(getState))
-    dispatch({
-      type: authSucceed.type,
-      payload: response.data
-    })
-  } catch (error) {
-    dispatch({
-      type: authFailed.type
-    })
-  }
-}
-//--------------------------------
 export const logout = () => async (dispatch, getState) => {
   try {
-    const response = await axios.post(logout_user, {})
+    const response = await axios.post(logout_user, {});
     dispatch({
-      type: logoutSucceed.type
-    })
+      type: logoutSucceed.type,
+    });
   } catch (error) {
-    
+    console.log("logout error");
   }
-}
+};
 
 //---------------------------------
-export const register = (email, password1, password2, date_of_birth) => async (dispatch, getState) => {
-  
-  const body = JSON.stringify({ email, password1, password2, date_of_birth });
+export const register = (
+  email,
+  first_name,
+  last_name,
+  password1,
+  password2,
+  date_of_birth,
+  gender
+) => async (dispatch, getState) => {
+  const body = JSON.stringify({
+    email,
+    first_name,
+    last_name,
+    password1,
+    password2,
+    date_of_birth,
+    gender,
+  });
   dispatch({
-    type: registerRequested.type
-  })
+    type: registerRequested.type,
+  });
   try {
-    const response = await axios.post({
+    const response = await axios.post(
       registrationEndpoint,
       body,
       getHeaders(getState)
-    })
+    );
     dispatch({
       type: registerSucceed.type,
-      payload: response.data
-    })
-    dispatch(getUserInfo())
+      payload: response.data,
+    });
+    dispatch(getUserInfo());
   } catch (error) {
     dispatch({
-      type: registerFailed.type
-    })
+      type: registerFailed.type,
+    });
   }
-
-
-}
+};
 
 //----------------------------------
 
-export const getHeaders = getState => {
-  const token = getState().auth.token
+export const getHeaders = (getState) => {
+  const token = getState().entities.auth.token;
+  //console.log("token "+ token)
   let config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   if (token) {
-    config.headers["Authorization"] = 'Token ' + token;
+    config.headers["Authorization"] = "Token " + token;
   }
-  return config
-}
+  //console.log("config ->> "+ config)
+  return config;
+};
