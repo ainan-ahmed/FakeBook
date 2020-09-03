@@ -27,7 +27,7 @@ class NavBar extends Component {
                 <NavLink className="nav-item nav-link" to="/">Home</NavLink>
               </Nav>
               <Nav className="ml-auto">
-                <NavLink className="nav-item nav-link" to="/profile">
+                <NavLink className="nav-item nav-link" to={"/"+ user.username}>
                   {user.username}
                 </NavLink>
                 <NavLink className="nav-item nav-link" to="/logout">

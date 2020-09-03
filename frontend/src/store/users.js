@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
   loginEndpoint,
-  get_user,
+  get_auth_user,
   logout_user,
+  get_user_details,
   registrationEndpoint,
 } from "./endpoints";
 
@@ -16,6 +17,15 @@ const slice = createSlice({
     user: null,
   },
   reducers: {
+    detailsRequested: (state, action) => {
+      state.isLoading = true;
+    },
+    detailsSucceed: (state, action) => {
+      state.isLoading = false;
+    },
+    detailsFailed: (state, action) => {
+      state.isLoading = false;
+    },
     authRequested: (state, action) => {
       state.isLoading = true;
     },
@@ -82,20 +92,41 @@ export const {
   registerRequested,
   registerFailed,
   registerSucceed,
+  detailsRequested,
+  detailsFailed,
+  detailsSucceed,
 } = slice.actions;
 export default slice.reducer;
 
 //ACTIONs
-
 //--------------------------------
-export const getUserInfo = () => async (dispatch, getState) => {
+export const getUser = (username) => async (dispatch, getState) => {
+  dispatch({
+    type: detailsRequested.type
+  })
+  try {
+    if (!getState().entities.auth.isAuthenticated) {
+      const response = await axios.get(get_user_details + username);
+      dispatch({
+        type:detailsSucceed.type
+      })
+      return response.data;
+    }
+  } catch (error) {
+    dispatch({
+      type: detailsFailed.type,
+    })
+  }
+}
+//--------------------------------
+export const getAuthUserInfo = () => async (dispatch, getState) => {
   dispatch({
     type: authRequested.type,
   });
   //console.log("head =>"+ getHeaders(getState) )
   try {
     // console.log("head =>")
-    const response = await axios.get(get_user, getHeaders(getState));
+    const response = await axios.get(get_auth_user, getHeaders(getState));
     //console.log("->> "+response.data);
     dispatch({
       type: authSucceed.type,
@@ -126,7 +157,7 @@ export const login = (email, password) => async (dispatch, getState) => {
     });
 
     //console.log("HELLO");
-    dispatch(getUserInfo());
+    dispatch(getAuthUserInfo());
     //console.log("HELLO");
   } catch (error) {
     dispatch({
@@ -179,7 +210,7 @@ export const register = (
       type: registerSucceed.type,
       payload: response.data,
     });
-    dispatch(getUserInfo());
+    dispatch(getAuthUserInfo());
   } catch (error) {
     dispatch({
       type: registerFailed.type,

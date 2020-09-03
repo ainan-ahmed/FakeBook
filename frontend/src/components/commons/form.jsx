@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
-class baseForm extends Component {
+class BaseForm extends Component {
   state = {
     data: {},
     errors: {},
@@ -57,4 +57,4 @@ class baseForm extends Component {
   };
 }
 
-export default baseForm;
+export default BaseForm;

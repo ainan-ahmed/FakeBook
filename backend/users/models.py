@@ -20,9 +20,9 @@ class CustomUser(AbstractUser):
     )
     date_of_birth = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(
-        upload_to="profile_photos", null=True, blank=True)
+        upload_to="profile_photos", null=True, blank=True, default="images/default.png")
     cover_photo = models.ImageField(
-        upload_to='cover_photos', blank=True, null=True)
+        upload_to='cover_photos', blank=True, null=True, default="images/default.png")
     bio = models.TextField(max_length=500, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=50, blank=True, null=True)

@@ -24,8 +24,8 @@ class UserDetail(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.AllowAny,)
 
-class AuthUserDetail(generics.RetrieveUpdateDestroyAPIView):
-    lookup_field = "username"
-    queryset = get_user_model().objects.all()
-    serializer_class = AuthUserSerializer
-    permission_classes = (IsAuthUser,)
+# class AuthUserDetail(generics.RetrieveUpdateDestroyAPIView):
+#     lookup_field = "username"
+#     queryset = get_user_model().objects.all()
+#     serializer_class = AuthUserSerializer
+#     permission_classes = (IsAuthUser,)

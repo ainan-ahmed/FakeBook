@@ -27,7 +27,8 @@ class UserPostSerializer(serializers.ModelSerializer):
 
 
 class FollowerSerializer(serializers.ModelSerializer):
-    follower = serializers.StringRelatedField(many=True)
+    follower = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
     class Meta:
         model = Followers
         fields = '__all__'
@@ -35,23 +36,23 @@ class FollowerSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     posts = UserPostSerializer(many=True, read_only=True)
-    #followers = FollowerSerializer(many=True, read_only=True)
+    followers = FollowerSerializer(many=True, read_only=True)
 
     class Meta:
         model = get_user_model()
         lookup_field = "username"
         fields = ('id', 'username', 'email', 'first_name',
-                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 'posts', 'followers')
+                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 'posts', 'followers','following')
 
 
-class AuthUserSerializer(serializers.ModelSerializer):
-    posts = UserPostSerializer(many=True)
-    followers = FollowerSerializer(many=True)
+# class AuthUserSerializer(serializers.ModelSerializer):
+#     posts = UserPostSerializer(many=True)
+#     followers = FollowerSerializer(many=True)
 
-    class Meta:
-        model = get_user_model()
-        lookup_field = "username"
-        fields = '__all__'
+#     class Meta:
+#         model = get_user_model()
+#         lookup_field = "username"
+#         fields = '__all__'
 
 
 class CustomRegisterSerializer(RegisterSerializer):

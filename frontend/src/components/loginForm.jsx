@@ -1,11 +1,11 @@
 import React from "react";
 import Joi from "joi-browser";
-import baseForm from "./commons/form";
-import { Form, Button, Alert } from "react-bootstrap";
+import BaseForm from "./commons/form";
+import { Form, Button, Alert, Container } from "react-bootstrap";
 import { login } from "../store/users";
 import { connect } from "react-redux";
 
-class LoginForm extends baseForm {
+class LoginForm extends BaseForm {
   state = {
     data: { email: "", password: "" },
     errors: {},
@@ -41,7 +41,7 @@ class LoginForm extends baseForm {
   render() {
     const { data, errors } = this.state;
     return (
-      <div className="mt-5">
+      <Container className="mt-5">
         <h1>Login Form</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
@@ -78,7 +78,7 @@ class LoginForm extends baseForm {
             Submit
           </Button>
         </Form>
-      </div>
+      </Container>
     );
   }
 }
