@@ -11,17 +11,16 @@ import Home from "./components/home";
 import RegisterForm from "./components/registerForm";
 import Profile from "./components/profile";
 import EditProfile from './components/editProfile';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 class App extends Component {
-  async componentDidMount() {
-    if (localStorage.getItem("token")) {
-      await this.props.getAuthUserInfo();
-    }
-  }
+  
   render() {
     const { auth } = this.props;
     console.log(auth);
     return (
       <React.Fragment>
+        <ToastContainer/> 
         <NavBar auth={auth} />
         <div className="">
           <Switch>
@@ -65,7 +64,4 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   auth: state.entities.auth,
 });
-const mapDispatchToProps = (dispatch) => ({
-  getAuthUserInfo: () => dispatch(getAuthUserInfo()),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

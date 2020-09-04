@@ -1,21 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import configureStore from "./store/configureStore";
 import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/es/integration/react";
+import { Spinner } from "react-bootstrap";
 const store = configureStore();
+let persistor = persistStore(store);
 ReactDOM.render(
- // <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-      <App/>
-      </Provider>
-    </BrowserRouter>,
+  // <React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={<Spinner/>} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>,
   //</React.StrictMode>,
   document.getElementById("root")
 );

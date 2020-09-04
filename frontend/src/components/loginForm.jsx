@@ -16,8 +16,8 @@ class LoginForm extends BaseForm {
   };
   submitToServer = async () => {
     try {
-      const { email, password } = this.state.data;
-      await this.props.login(email, password);
+      const { data } = this.state;
+      await this.props.login(data);
       //console.log(this.props);
       this.props.history.push("/");
       //const { state } = this.props.location;

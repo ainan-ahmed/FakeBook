@@ -42,7 +42,7 @@ class BaseForm extends Component {
     this.submitToServer();
   };
   handleChange = ({ currentTarget: input }) => {
-    console.log(input.value);
+    //console.log(input.value);
     const errors = { ...this.state.errors };
     let errorMessage = "";
     if (input.name === "password2")

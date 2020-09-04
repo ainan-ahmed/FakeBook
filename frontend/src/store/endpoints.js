@@ -1,4 +1,4 @@
-const baseURL = "http://127.0.0.1:8000/api/v1/";
+export const baseURL = "http://127.0.0.1:8000/api/v1/";
 export const registrationEndpoint = baseURL + "auth/registration/";
 export const loginEndpoint = baseURL + "auth/login/";
 export const get_auth_user = baseURL + "auth/user/";

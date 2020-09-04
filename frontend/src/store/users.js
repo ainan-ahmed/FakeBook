@@ -102,28 +102,28 @@ export default slice.reducer;
 //--------------------------------
 export const getUser = (username) => async (dispatch, getState) => {
   dispatch({
-    type: detailsRequested.type
-  })
+    type: detailsRequested.type,
+  });
   try {
     if (!getState().entities.auth.isAuthenticated) {
       const response = await axios.get(get_user_details + username);
       dispatch({
-        type:detailsSucceed.type
-      })
+        type: detailsSucceed.type,
+      });
       return response.data;
     }
   } catch (error) {
     dispatch({
       type: detailsFailed.type,
-    })
+    });
   }
-}
+};
 //--------------------------------
 export const getAuthUserInfo = () => async (dispatch, getState) => {
   dispatch({
     type: authRequested.type,
   });
-  //console.log("head =>"+ getHeaders(getState) )
+  console.log("head =>" + getHeaders(getState));
   try {
     // console.log("head =>")
     const response = await axios.get(get_auth_user, getHeaders(getState));
@@ -141,16 +141,29 @@ export const getAuthUserInfo = () => async (dispatch, getState) => {
 
 //-----------------------------
 
-export const login = (email, password) => async (dispatch, getState) => {
+export const login = (data) => async (dispatch, getState) => {
   dispatch({
     type: loginRequested.type,
   });
+
+  // dispatch(apiCallBegan({
+  //   url: loginEndpoint,
+  //   method: 'post',
+  //   data,
+  //   onStart: loginRequested.type,
+  //   onSuccess: loginSucceed.type,
+  //   onError: loginFailed.type
+  // }))
+  // console.log(getState().entities.auth);
+  // if (getState().entities.auth.isAuthenticated)
+  // {
+  //   dispatch(getAuthUserInfo());
+  // }
   try {
-    const response = await axios.post(loginEndpoint, {
-      email,
-      password,
-    });
-    //console.log(response.data);
+    const response = await axios.post(loginEndpoint, data);
+    // const headers = getHeaders(getState)
+    // const response = await authAPI(loginEndpoint,'post',data,headers)
+    console.log(response.data);
     dispatch({
       type: loginSucceed.type,
       payload: response.data,
@@ -177,8 +190,27 @@ export const logout = () => async (dispatch, getState) => {
     console.log("logout error");
   }
 };
+//--------------------------------
+
+export const updateUser = (data) => async (dispatch, getState) => {
+  dispatch({
+    type: authRequested.type,
+  });
+  try {
+    const response = await axios.put(get_auth_user, data, getHeaders(getState));
+    dispatch({
+      type: authSucceed.type,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: detailsFailed.type,
+    });
+  }
+};
 
 //---------------------------------
+
 export const register = (
   email,
   first_name,
@@ -222,7 +254,7 @@ export const register = (
 
 export const getHeaders = (getState) => {
   const token = getState().entities.auth.token;
-  //console.log("token "+ token)
+  console.log("token "+ token)
   let config = {
     headers: {
       "Content-Type": "application/json",
