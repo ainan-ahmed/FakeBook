@@ -13,3 +13,10 @@ class Followers(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True,
                                       db_index=True)
+    
+    
+    class Meta:
+        unique_together = ("user", "follower")
+        
+    def __str__(self):
+        return self.user

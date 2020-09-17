@@ -7,9 +7,15 @@ from allauth.account.utils import setup_user_email
 from posts.models import Post, Comment
 from follow.models import Followers
 
+class getUserAndProfilePicture(serializers.ModelSerializer):
+    
+    class Meta:
+        model = get_user_model()
+        fields = ('username','profile_photo')
 
 class PostCommentSerializer(serializers.ModelSerializer):
-    posted_by = serializers.StringRelatedField()
+    #posted_by = serializers.StringRelatedField()
+    posted_by = getUserAndProfilePicture()
 
     class Meta:
         model = Comment
@@ -17,7 +23,7 @@ class PostCommentSerializer(serializers.ModelSerializer):
 
 
 class UserPostSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
+    user = getUserAndProfilePicture()
     users_like = serializers.StringRelatedField(many=True)
     comments = PostCommentSerializer(many=True)
 

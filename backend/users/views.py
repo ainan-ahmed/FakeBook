@@ -7,7 +7,6 @@ from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from .permissions import IsAuthUser
 
 # class UserViewSet(viewsets.ModelViewSet):
 #     queryset = get_user_model().objects.all()
