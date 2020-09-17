@@ -105,13 +105,13 @@ export const getUser = (username) => async (dispatch, getState) => {
     type: detailsRequested.type,
   });
   try {
-    if (!getState().entities.auth.isAuthenticated) {
+    //if (!getState().entities.auth.isAuthenticated) {
       const response = await axios.get(get_user_details + username);
       dispatch({
         type: detailsSucceed.type,
       });
       return response.data;
-    }
+    //}
   } catch (error) {
     dispatch({
       type: detailsFailed.type,

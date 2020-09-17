@@ -1,19 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getUser } from "../store/users";
-import {
-  Image,
-  Container,
-  Col,
-  Spinner,
-  Row,
-  Nav,
-  Button,
-  Card,
-  Form,
-  Modal,
-  Figure,
-} from "react-bootstrap";
+import { Container, Col, Spinner, Row, Card, Figure } from "react-bootstrap";
 import "../css/style.css";
 import ProfileMenu from "./commons/profileMenu";
 import Post from "./commons/post";
@@ -45,6 +33,7 @@ class Profile extends Component {
     if (!auth.isLoading && user) {
       //console.log(user.username);
       const { posts } = user;
+      console.log(posts);
       let cover = {
         backgroundImage: "url(" + user.cover_photo + ")",
         backgroundSize: "cover",
@@ -97,7 +86,7 @@ class Profile extends Component {
                   </aside>
                 </Col>
                 <Col lg={6} order={2}>
-                  <ShareBox />
+                  {auth && <ShareBox auth={auth} />}
                   {posts && posts.map((post) => <Post post={post} />)}
                 </Col>
               </Row>
