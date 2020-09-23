@@ -39,6 +39,11 @@ class FollowerSerializer(serializers.ModelSerializer):
         model = Followers
         fields = '__all__'
 
+class UserSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('first_name','last_name','username')
+
 
 class UserSerializer(serializers.ModelSerializer):
     posts = UserPostSerializer(many=True, read_only=True)

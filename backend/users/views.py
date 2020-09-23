@@ -7,7 +7,7 @@ from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-
+from rest_framework import filters
 # class UserViewSet(viewsets.ModelViewSet):
 #     queryset = get_user_model().objects.all()
 #     serializer_class = UserSerializer
@@ -23,6 +23,17 @@ class UserDetail(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.AllowAny,)
 
+
+class UserSearch(generics.ListAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSearchSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username', 'email']
+    
+    
+    
+    
+    
 # class AuthUserDetail(generics.RetrieveUpdateDestroyAPIView):
 #     lookup_field = "username"
 #     queryset = get_user_model().objects.all()
