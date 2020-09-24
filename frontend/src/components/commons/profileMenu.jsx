@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "../../css/style.css";
-import { Container, Col, Row, Button, Figure,Nav } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Container, Col, Row, Button, Figure, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 class ProfileMenu extends Component {
   render() {
     const { profile_photo, auth, username } = this.props;
-   // console.log("object "+ username);
+    // console.log("object "+ username);
     return (
       <div className="profile-menu-area bg-white">
         <Container>
@@ -13,9 +13,9 @@ class ProfileMenu extends Component {
             <Col lg={3} md={3}>
               <div className="profile-picture-box">
                 <Figure className="profile-picture">
-                  <a href="">
+                  <Link to={{ pathname: "/" + username }}>
                     <Figure.Image src={profile_photo} alt="profile picture" />
-                  </a>
+                  </Link>
                 </Figure>
               </div>
             </Col>
@@ -35,7 +35,7 @@ class ProfileMenu extends Component {
               <Col lg={2} md={3} className="d-none d-md-block">
                 <div className="profile-edit-panel">
                   <Button className="edit-btn mt-3" variant="outline-info">
-                    <Link to={"/"+username+"/edit"}>Edit Pofile</Link>
+                    <Link to={"/" + username + "/edit"}>Edit Pofile</Link>
                   </Button>
                 </div>
               </Col>

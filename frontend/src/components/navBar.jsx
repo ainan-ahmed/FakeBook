@@ -1,7 +1,22 @@
 import React, { Component } from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 class NavBar extends Component {
+  state = {
+    search: ''
+  }
+  handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(this.props);
+    this.props.history.push({
+      pathname: '/users/search',
+      search: '?q=' + this.state.search, 
+    })
+  }
+  handleChange = e => {
+    this.setState({ search: e.target.value })
+  }
   render() {
     const { isAuthenticated, user } = this.props.auth;
     return (
@@ -11,6 +26,17 @@ class NavBar extends Component {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
+          <Form inline className="ml-auto" onSubmit={this.handleSubmit}>
+            <FormControl
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+              name="search"
+              value={this.state.search}
+              onChange={this.handleChange}
+            />
+            <Button variant="outline-success" type="submit">Search</Button>
+          </Form>
           {!isAuthenticated && (
             <Nav className="ml-auto">
               <NavLink className="nav-item nav-link" to="/login">
@@ -24,10 +50,12 @@ class NavBar extends Component {
           {isAuthenticated && user && (
             <React.Fragment>
               <Nav className="mr-auto">
-                <NavLink className="nav-item nav-link" to="/">Home</NavLink>
+                <NavLink className="nav-item nav-link" to="/">
+                  Home
+                </NavLink>
               </Nav>
               <Nav className="ml-auto">
-                <NavLink className="nav-item nav-link" to={"/"+ user.username}>
+                <NavLink className="nav-item nav-link" to={"/" + user.username}>
                   {user.username}
                 </NavLink>
                 <NavLink className="nav-item nav-link" to="/logout">
@@ -42,4 +70,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

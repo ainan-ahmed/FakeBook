@@ -1,5 +1,5 @@
 import React from "react";
-import BaseForm from "./commons/form";
+import BaseForm from "./commons/baseForm";
 import Joi from "joi-browser";
 import { connect } from "react-redux";
 import { register } from "../store/users";
@@ -13,7 +13,7 @@ class RegisterForm extends BaseForm {
       date_of_birth: "",
       first_name: "",
       last_name: "",
-      password: "",
+      password1: "",
       password2: "",
       gender: "",
     },
@@ -25,13 +25,13 @@ class RegisterForm extends BaseForm {
     last_name: Joi.string().required().label("Last name"),
     date_of_birth: Joi.string().required().label("Date of birth"),
     gender: Joi.string().required().label("Gender"),
-    password: Joi.string().required().min(6).label("Password"),
+    password1: Joi.string().required().min(6).label("password1"),
     password2: Joi.string()
       .required()
       .min(6)
-      .valid(Joi.ref("password"))
+      .valid(Joi.ref("password1"))
       .options({ language: { any: { allowOnly: "password do not match" } } })
-      .label("Password"),
+      .label("password1"),
   };
 
   submitToServer = async () => {
@@ -41,7 +41,7 @@ class RegisterForm extends BaseForm {
       email,
       first_name,
       last_name,
-      password,
+      password1,
       password2,
       date_of_birth,
       gender,
@@ -51,7 +51,7 @@ class RegisterForm extends BaseForm {
         email,
         first_name,
         last_name,
-        password,
+        password1,
         password2,
         date_of_birth,
         gender
@@ -66,7 +66,7 @@ class RegisterForm extends BaseForm {
       errors.first_name = serverError["first_name"];
       errors.last_name = serverError["last_name"];
       errors.date_of_birth = serverError["date_of_birth"];
-      errors.password = serverError["password"];
+      errors.password1 = serverError["password1"];
       errors.password2 = serverError["password2"];
       this.setState({ errors });
       console.log(this.state.errors);
@@ -148,11 +148,11 @@ class RegisterForm extends BaseForm {
             <Form.Control
               type="password"
               placeholder="Password"
-              name="password"
+              name="password1"
               onChange={this.handleChange}
             />
-            {errors.password && (
-              <Alert variant={"danger"}>{errors.password}</Alert>
+            {errors.password1 && (
+              <Alert variant={"danger"}>{errors.password1}</Alert>
             )}
           </Form.Group>
           <Form.Group>
@@ -183,7 +183,7 @@ const mapDispatchToProps = (dispatch) => ({
     email,
     first_name,
     last_name,
-    password,
+    password1,
     password2,
     date_of_birth,
     gender
@@ -193,7 +193,7 @@ const mapDispatchToProps = (dispatch) => ({
         email,
         first_name,
         last_name,
-        password,
+        password1,
         password2,
         date_of_birth,
         gender

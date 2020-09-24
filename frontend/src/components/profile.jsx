@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getUser } from "../store/users";
-import { Container, Col, Spinner, Row, Card, Figure } from "react-bootstrap";
+import { Container, Col, Spinner, Row, Card } from "react-bootstrap";
 import "../css/style.css";
 import ProfileMenu from "./commons/profileMenu";
 import Post from "./commons/post";
@@ -13,7 +13,7 @@ class Profile extends Component {
   async componentDidMount() {
     const username = this.props.match.params.username;
     console.log("->>>" + username);
-    if (this.props.auth.user && username !== this.props.auth.user.username) {
+    if ((this.props.auth.user && username !== this.props.auth.user.username) || !this.props.auth.user) {
       try {
         console.log(username);
         const user = await this.props.getUser(username);
@@ -76,9 +76,9 @@ class Profile extends Component {
                         </div>
                         <ul className="author-into-list">
                           <li>
-                            <a href="" className="font-weight-bold">
+                            <div className="font-weight-bold">
                               Bangladesh
-                            </a>
+                            </div>
                           </li>
                         </ul>
                       </Card.Body>

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import NavBar from "./components/navBar";
 import LoginForm from "./components/loginForm";
-import { getAuthUserInfo } from "./store/users";
 import Logout from "./components/logout";
 import ProtectedRoute from "./components/commons/protectedRoute";
 import Home from "./components/home";
@@ -13,6 +12,7 @@ import Profile from "./components/profile";
 import EditProfile from './components/editProfile';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SearchUser from './components/searchUser';
 class App extends Component {
   
   render() {
@@ -24,6 +24,7 @@ class App extends Component {
         <NavBar auth={auth} />
         <div className="">
           <Switch>
+            <Route path="/users/search" auth={auth} component={SearchUser} />
             <ProtectedRoute
               path="/login"
               component={LoginForm}

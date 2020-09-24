@@ -1,31 +1,36 @@
 import React, { Component } from "react";
 import moment from "moment";
-
-import {
-  Image,
-  Button,
-  Card,
-  Figure,
-} from "react-bootstrap";
+import { Image, Button, Card, Figure } from "react-bootstrap";
 import "../../css/style.css";
+import { Link } from 'react-router-dom';
 class Post extends Component {
-    render() {
-      const { post } = this.props
-      console.log(post);
+  render() {
+    const { post } = this.props;
+    console.log(post);
     return (
       <React.Fragment>
         <Card className="mt-4 p-2">
           <Card.Title className="allign-items-center d-flex">
             <div className="profile-thumb ml-2">
-            <a href="">
               <Figure className="profile-thumb-middle">
-                <Image src={post.user.profile_photo} alt="profile picture" />
+                <Link to={{ pathname: "/" + post.user.username }}>
+                  <Figure.Image
+                    src={post.user.profile_photo}
+                    alt="profile picture"
+                  />
+                </Link>
               </Figure>
-            </a>
-          </div>
+              {/* <Figure className="profile-thumb-middle">
+                <a href="">
+                  <Image src={post.user.profile_photo} alt="profile picture" />
+                </a>
+              </Figure> */}
+            </div>
             <div className="posted-author">
               <h6 className="author">
-                <a href="">{post.user.username}</a>
+                <Link to={{ pathname: "/" + post.user.username }}>
+                  {post.user.username}
+                </Link>
               </h6>
               <span className="post-time ">
                 {moment(post.date_created).format("Do MMMM,YYYY")}
@@ -51,9 +56,7 @@ class Post extends Component {
             <p className="post-desc pb-0">{post.description}</p>
             <div className="post-thumb-gallery">
               <Figure className="post-thumb img-popup ">
-                <a href="">
                   <Image src={post.image} alt="post image" fluid></Image>
-                </a>
               </Figure>
             </div>
           </Card.Body>

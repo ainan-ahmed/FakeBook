@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import BaseForm from "./commons/form";
+import React from "react";
+import BaseForm from "./commons/baseForm";
 import { Card, Container, Form, Button, Alert } from "react-bootstrap";
 import Joi from "joi-browser";
 import { connect } from "react-redux";

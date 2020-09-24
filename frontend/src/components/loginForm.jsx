@@ -1,6 +1,6 @@
 import React from "react";
 import Joi from "joi-browser";
-import BaseForm from "./commons/form";
+import BaseForm from "./commons/baseForm";
 import { Form, Button, Alert, Container } from "react-bootstrap";
 import { login } from "../store/users";
 import { connect } from "react-redux";

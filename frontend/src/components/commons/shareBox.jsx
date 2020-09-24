@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Form, Modal, Button, Col } from "react-bootstrap";
+import { Card, Form, Button } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import { createPost } from "../../store/posts";
 import { connect } from 'react-redux';
@@ -88,7 +88,7 @@ class ShareBox extends Component {
                   onChange={this.handleImageChange}
                   custom
                 />
-                <img src={this.state.imagePreviewUrl} className="w-25 h-25" />
+                <img src={this.state.imagePreviewUrl} alt="" className="w-25 h-25" />
               </Form.Group>
               <Button type="submit" variant="primary">Post</Button>
             </Form>
