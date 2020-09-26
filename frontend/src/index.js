@@ -15,7 +15,7 @@ const store = configureStore();
 let persistor = persistStore(store);
 ReactDOM.render(
   // <React.StrictMode>
-  <BrowserRouter>
+  <BrowserRouter forceRefresh>
     <Provider store={store}>
       <PersistGate loading={<Spinner/>} persistor={persistor}>
         <App />

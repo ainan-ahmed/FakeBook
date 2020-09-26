@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Card, Col, Container, Image, Row } from "react-bootstrap";
 import axios from "axios";
 import { search_user } from "../store/endpoints";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser } from "../store/users";
+import "../css/style.css";
 const queryString = require("query-string");
 class SearchUser extends Component {
   state = {
     data: null,
-    query: queryString.parse(this.props.location.search).q,
   };
   handleQuery = async (query) => {
     const response = await axios.get(search_user, {
@@ -38,14 +38,6 @@ class SearchUser extends Component {
   }
   render() {
     let { data, query } = this.state;
-    // console.log(query);
-    // //let query = queryString.parse(this.props.location.search).q;
-    // if (query === "") query = null;
-    // let searchQuery = query;
-    // console.log(data);
-    // console.log(query);
-    // console.log(searchQuery);
-    // if (query) this.handleQuery(query);
     return (
       <Container className="mt-5">
         {!data && (
@@ -54,7 +46,7 @@ class SearchUser extends Component {
         {query && (
           <h1 className="text center mb-4">
             Search Result for
-            <span className="text-success font-weight-bold">  "{query}"</span>
+            <span className="text-success font-weight-bold"> "{query}"</span>
           </h1>
         )}
         {data && !data.length && (
@@ -63,11 +55,30 @@ class SearchUser extends Component {
         {data &&
           data.length > 0 &&
           data.map((i) => (
-            <li key={i.username}>
-              <Link to={{ pathname: "/" + i.username }}>
-                {i.first_name} {i.last_name}
-              </Link>
-            </li>
+            <Card style={{ border: "1px black solid" }} className="mt-3">
+              <Card.Title className="p-2">
+                {/* <li key={i.username}> */}
+                <Row>
+                  <Link to={{ pathname: "/" + i.username }} className="ml-5">
+                    <Image
+                      src={i.profile_photo}
+                      alt="profile picture"
+                      className="profile-thumb-middle"
+                    />
+                  </Link>
+                  <Link
+                    to={{ pathname: "/" + i.username }}
+                    className="ml-4 mt-2"
+                  >
+                    {i.first_name} {i.last_name}
+                  </Link>
+                </Row>
+                {/* </li> */}
+              </Card.Title>
+              <Card.Text>
+                {i.city && <p className="ml-5">Lives in {i.city}</p>}
+              </Card.Text>
+            </Card>
           ))}
       </Container>
     );

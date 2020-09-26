@@ -33,6 +33,7 @@ class ShareBox extends Component {
     let image = e.target.files[0];
     const data = { ...this.state.data };
     data["image"] = image;
+    console.log(image);
     reader.onloadend = () => {
       this.setState({
         data,
@@ -49,8 +50,13 @@ class ShareBox extends Component {
     //console.log(data);
     data["user"] = this.props.auth.user.id;
     console.log(data);
+    let formData = new FormData()
+    formData.set("description", data["description"])
+    formData.set("user", data["user"])
+    formData.set("image", data["image"])
+    
     try {
-      await this.props.createPost(data)
+      await this.props.createPost(formData)
       toast.success("User updated successfully.");
       this.props.getAuthUserInfo();
 

@@ -49,7 +49,7 @@ class App extends Component {
               auth={auth}
               component={EditProfile}
             />
-            <Route path="/:username" auth={auth} component={Profile} />
+            <Route path="/:username" auth={auth}  component={Profile} />
             <ProtectedRoute
               path="/"
               type="private"

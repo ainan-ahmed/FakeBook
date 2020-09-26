@@ -9,6 +9,7 @@ class NavBar extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     console.log(this.props);
+    this.setState({search:''})
     this.props.history.push({
       pathname: '/users/search',
       search: '?q=' + this.state.search, 
@@ -24,9 +25,7 @@ class NavBar extends Component {
         <Navbar.Brand>
           <Link to="/">Ainan</Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbar-nav" />
-        <Navbar.Collapse id="navbar-nav">
-          <Form inline className="ml-auto" onSubmit={this.handleSubmit}>
+          <Form inline className="ml-auto mr-4" onSubmit={this.handleSubmit}>
             <FormControl
               type="text"
               placeholder="Search"
@@ -37,6 +36,8 @@ class NavBar extends Component {
             />
             <Button variant="outline-success" type="submit">Search</Button>
           </Form>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
           {!isAuthenticated && (
             <Nav className="ml-auto">
               <NavLink className="nav-item nav-link" to="/login">

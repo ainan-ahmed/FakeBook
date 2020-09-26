@@ -11,7 +11,7 @@ class Post extends Component {
       <React.Fragment>
         <Card className="mt-4 p-2">
           <Card.Title className="allign-items-center d-flex">
-            <div className="profile-thumb ml-2">
+            {post.user.profile_photo && <div className="profile-thumb ml-2">
               <Figure className="profile-thumb-middle">
                 <Link to={{ pathname: "/" + post.user.username }}>
                   <Figure.Image
@@ -25,7 +25,7 @@ class Post extends Component {
                   <Image src={post.user.profile_photo} alt="profile picture" />
                 </a>
               </Figure> */}
-            </div>
+            </div>}
             <div className="posted-author">
               <h6 className="author">
                 <Link to={{ pathname: "/" + post.user.username }}>
@@ -54,11 +54,11 @@ class Post extends Component {
           </Card.Title>
           <Card.Body className="post-content">
             <p className="post-desc pb-0">{post.description}</p>
-            <div className="post-thumb-gallery">
+            {post.image && <div className="post-thumb-gallery">
               <Figure className="post-thumb img-popup ">
                   <Image src={post.image} alt="post image" fluid></Image>
               </Figure>
-            </div>
+            </div>}
           </Card.Body>
           <Card.Footer className="post-meta">
             <Button className="post-meta-like" variant="light">

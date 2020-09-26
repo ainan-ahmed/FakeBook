@@ -6,6 +6,7 @@ import "../css/style.css";
 import ProfileMenu from "./commons/profileMenu";
 import Post from "./commons/post";
 import ShareBox from "./commons/shareBox";
+import _ from 'lodash'
 class Profile extends Component {
   state = {
     user: null,
@@ -13,22 +14,25 @@ class Profile extends Component {
   async componentDidMount() {
     const username = this.props.match.params.username;
     console.log("->>>" + username);
+    //let user= null;
     if ((this.props.auth.user && username !== this.props.auth.user.username) || !this.props.auth.user) {
       try {
         console.log(username);
-        const user = await this.props.getUser(username);
+         const user = await this.props.getUser(username);
         //console.log(user);
         this.setState({ user });
       } catch (error) {
         console.log("error while fetching user");
       }
     }
+    else {
+      this.setState({user: this.props.auth.user})
+      //user = this.props.auth.user
+    }
   }
-
   render() {
     let { user } = this.state;
     const { auth } = this.props;
-    if (user === null) user = auth.user;
     console.log(user);
     if (!auth.isLoading && user) {
       //console.log(user.username);

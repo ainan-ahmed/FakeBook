@@ -33,7 +33,7 @@ export const createPost = data => async (dispatch, getState) => {
   });
   console.log(data);
   try {
-    const response = await axios.post(post_routes,data, getHeaders(getState));
+    const response = await axios.post(post_routes,data, getFileHeaders(getState));
     
     dispatch({
       type: postCreateSucceed.type,
@@ -61,3 +61,18 @@ export const getHeaders = (getState) => {
   //console.log("config ->> "+ config)
   return config;
 };
+
+export const getFileHeaders = getState => {
+  const token = getState().entities.auth.token;
+  console.log("token " + token);
+  let config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  if (token) {
+    config.headers["Authorization"] = "Token " + token;
+  }
+  //console.log("config ->> "+ config)
+  return config;
+}
