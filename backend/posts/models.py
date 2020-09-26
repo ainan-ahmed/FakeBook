@@ -14,6 +14,9 @@ class Post(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     users_like =models.ManyToManyField(get_user_model(),related_name='posts_liked',blank=True)
     
+    
+    class Meta:
+        ordering = ['-date_created']
     def __str__(self):
         return self.description
     

@@ -29,6 +29,7 @@ class UserPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
+        ordering = ['-date_created']
         fields = '__all__'
 
 
@@ -42,7 +43,7 @@ class FollowerSerializer(serializers.ModelSerializer):
 class UserSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('first_name','last_name','username')
+        fields = ('first_name','last_name','username','profile_photo','city','country')
 
 
 class UserSerializer(serializers.ModelSerializer):
