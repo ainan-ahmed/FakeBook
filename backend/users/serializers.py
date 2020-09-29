@@ -5,13 +5,15 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from posts.models import Post, Comment
-from follow.models import Followers
+from follow.models import Following
+
 
 class getUserAndProfilePicture(serializers.ModelSerializer):
-    
+
     class Meta:
         model = get_user_model()
-        fields = ('username','profile_photo')
+        fields = ('username', 'profile_photo')
+
 
 class PostCommentSerializer(serializers.ModelSerializer):
     #posted_by = serializers.StringRelatedField()
@@ -33,28 +35,34 @@ class UserPostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FollowerSerializer(serializers.ModelSerializer):
-    follower = serializers.StringRelatedField()
-    user = serializers.StringRelatedField()
-    class Meta:
-        model = Followers
-        fields = '__all__'
+# class FollowerSerializer(serializers.ModelSerializer):
+#     following_user_id = serializers.StringRelatedField()
+#     #user_id = serializers.StringRelatedField()
+
+#     class Meta:
+#         model = Following
+#         fields = ['following_user_id']
+
 
 class UserSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('first_name','last_name','username','profile_photo','city','country')
+        fields = ('first_name', 'last_name', 'username',
+                  'profile_photo', 'city', 'country')
 
 
 class UserSerializer(serializers.ModelSerializer):
     posts = UserPostSerializer(many=True, read_only=True)
-    followers = FollowerSerializer(many=True, read_only=True)
+    #followers = FollowerSerializer(many=True, read_only=True)
+    following = serializers.StringRelatedField(many=True)
+    followers = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = get_user_model()
         lookup_field = "username"
         fields = ('id', 'username', 'email', 'first_name',
-                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 'posts', 'followers','following')
+                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 'posts', 'followers',
+                  'following')
 
 
 # class AuthUserSerializer(serializers.ModelSerializer):

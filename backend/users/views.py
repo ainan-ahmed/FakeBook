@@ -31,8 +31,7 @@ class UserSearch(generics.ListAPIView):
     search_fields = ['username', 'email']
     
     
-    
-    
+
     
 # class AuthUserDetail(generics.RetrieveUpdateDestroyAPIView):
 #     lookup_field = "username"

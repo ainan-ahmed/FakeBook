@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Followers
+from .models import Following
 # Register your models here.
-@admin.register(Followers)
+@admin.register(Following)
 class FollowersAdmin(admin.ModelAdmin):
-    list_display = ('user','follower','created_at')
+    list_display = ('user_id','following_user_id','created_at')

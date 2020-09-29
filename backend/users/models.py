@@ -5,7 +5,8 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 # Create your models here.
 import uuid
-from follow.models import Followers
+from follow.models import Following
+
 
 class CustomUser(AbstractUser):
     GENDER_CHOICES = (
@@ -28,13 +29,22 @@ class CustomUser(AbstractUser):
     country = models.CharField(max_length=50, blank=True, null=True)
     gender = models.CharField(
         max_length=20, choices=GENDER_CHOICES, default='male')
-    following = models.ManyToManyField('self',through=Followers,related_name='followers',symmetrical=False)
+    following = models.ManyToManyField(
+        'self', through=Following, related_name='followers', symmetrical=False)
     #objects = UserManager()
-    
+
     def __str__(self):
         return self.username
 
+    # def __unicode__(self):
+    #     return self.username
 
-    
+    # def get_following(self):
+    #     return self.following.filter(
+    #         status=1,
+    #         rel_to__user_id=self)
 
-
+    # def get_followers(self):
+    #     return self.followers.filter(
+    #         status=1,
+    #         rel_from__following_user_id=self)
