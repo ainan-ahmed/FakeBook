@@ -28,29 +28,3 @@ class UserFollowingView(ModelViewSet):
         follow = get_user_model().objects.get(username=username)
         user.following.remove(follow)
         return Response({'message': 'you are no longer following him'}, status=status.HTTP_200_OK)
-
-
-
-
-# class FollowerSet(APIView):
-#     permission_class = [IsAuthenticated, ]
-
-#     def post(self, request, format=None):
-#         user = get_user_model().objects.get(
-#             id=self.request.data.get['username'])
-#         follow = get_user_model().objects.get(
-#             id=self.request.data.get['follow'])
-#         Following.objects.create(user_id=user, following_user_id=follow)
-#         # Followers.save()
-#         return JsonResponse(status=status.HTTP_200_OK, messege="")
-
-#     def delete(self, request, format=None):
-#         user = get_user_model().objects.get(
-#             id=self.request.data.get['username'])
-#         follow = get_user_model().objects.get(
-#             id=self.request.data.get['follow'])
-#         Following.objects.filter(
-#             user_id = self,
-#             following_user_id = follow,
-#         ).delete()
-#         return JsonResponse(status=status.HTTP_200_OK, messege="")
