@@ -18,7 +18,7 @@ class Following(models.Model):
     following_user_id = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='rel_to',
     )
-    status =  models.IntegerField(choices=RELATIONSHIP_STATUSES)
+    status =  models.IntegerField(choices=RELATIONSHIP_STATUSES, default=1)
     created_at = models.DateTimeField(auto_now_add=True,
                                       db_index=True)
     
