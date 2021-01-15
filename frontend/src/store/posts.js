@@ -27,7 +27,7 @@ export const {
 export default slice.reducer;
 
 export const createPost = data => async (dispatch, getState) => {
-  console.log("post create requested");
+  //console.log("post create requested");
   dispatch({
     type: postCreateRequested.type,
   });
@@ -49,7 +49,7 @@ export const createPost = data => async (dispatch, getState) => {
 //---------------------------
 export const getHeaders = (getState) => {
   const token = getState().entities.auth.token;
-  console.log("token " + token);
+  //console.log("token " + token);
   let config = {
     headers: {
       "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export const getHeaders = (getState) => {
 
 export const getFileHeaders = getState => {
   const token = getState().entities.auth.token;
-  console.log("token " + token);
+  //console.log("token " + token);
   let config = {
     headers: {
       "Content-Type": "multipart/form-data",

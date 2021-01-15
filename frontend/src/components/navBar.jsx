@@ -18,24 +18,28 @@ class NavBar extends Component {
   handleChange = e => {
     this.setState({ search: e.target.value })
   }
+
   render() {
+    
     const { isAuthenticated, user } = this.props.auth;
     return (
       <Navbar bg="dark" variant="dark" expand="lg">
         <Navbar.Brand>
           <Link to="/">Ainan</Link>
         </Navbar.Brand>
-          <Form inline className="ml-auto mr-4" onSubmit={this.handleSubmit}>
-            <FormControl
-              type="text"
-              placeholder="Search"
-              className="mr-sm-2"
-              name="search"
-              value={this.state.search}
-              onChange={this.handleChange}
-            />
-            <Button variant="outline-success" type="submit">Search</Button>
-          </Form>
+        <Form inline className="ml-auto " onSubmit={this.handleSubmit}>
+          <FormControl
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+            name="search"
+            value={this.state.search}
+            onChange={this.handleChange}
+          />
+          <Button variant="outline-success" type="submit">
+            Search
+          </Button>
+        </Form>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           {!isAuthenticated && (
@@ -56,7 +60,11 @@ class NavBar extends Component {
                 </NavLink>
               </Nav>
               <Nav className="ml-auto">
-                <NavLink className="nav-item nav-link" to={"/" + user.username}>
+                <NavLink
+                  className="nav-item nav-link"
+                  to={"/" + user.username}
+                  
+                >
                   {user.username}
                 </NavLink>
                 <NavLink className="nav-item nav-link" to="/logout">

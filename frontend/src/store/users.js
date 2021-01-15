@@ -253,7 +253,7 @@ export const register = (
 //----------------------------------
 
 export const getHeaders = (getState) => {
-  const token = getState().entities.auth.token;
+  const token = getState().auth.token;
   console.log("token "+ token)
   let config = {
     headers: {

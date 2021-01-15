@@ -3,6 +3,10 @@ import "../../css/style.css";
 import { Container, Col, Row, Button, Figure, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 class ProfileMenu extends Component {
+
+  handleFollowUnFollow = () => {
+    
+  }
   render() {
     const { profile_photo, auth, username } = this.props;
     // console.log("object "+ username);
@@ -26,7 +30,7 @@ class ProfileMenu extends Component {
                     <Nav.Item as="li">Timeline</Nav.Item>
                     <Nav.Item as="li">about</Nav.Item>
                     <Nav.Item as="li">photos</Nav.Item>
-                    <Nav.Item as="li">Followers</Nav.Item>
+                    <Nav.Item as="li">Followers({auth.user.followers.length})</Nav.Item>
                   </Nav>
                 </div>
               </div>

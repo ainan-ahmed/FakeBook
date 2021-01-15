@@ -14,13 +14,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchUser from './components/searchUser';
 class App extends Component {
-  
   render() {
+    console.log("abcd");
     const { auth } = this.props;
     console.log(auth);
     return (
       <React.Fragment>
-        <ToastContainer/> 
+        <ToastContainer />
         <NavBar auth={auth} />
         <div className="">
           <Switch>
@@ -49,7 +49,11 @@ class App extends Component {
               auth={auth}
               component={EditProfile}
             />
-            <Route path="/:username" auth={auth}  component={Profile} />
+            <Route
+              path="/:username"
+              auth={auth}
+              component={Profile}
+            />
             <ProtectedRoute
               path="/"
               type="private"
@@ -63,6 +67,6 @@ class App extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  auth: state.entities.auth,
+  auth: state.auth,
 });
 export default connect(mapStateToProps)(App);

@@ -59,6 +59,7 @@ class ShareBox extends Component {
       await this.props.createPost(formData)
       toast.success("User updated successfully.");
       this.props.getAuthUserInfo();
+      //window.location.reload(false)
 
     } catch (error) {
       console.log("FAILED");
