@@ -7,7 +7,7 @@ from follow.views import UserFollowingView
 
 
 urlpatterns = [
-    path('<username>/', UserDetail.as_view()),
+    path('<username>/', UserDetails.as_view()),
     #path('<username>/profile/', AuthUserDetail.as_view()),
     path('',UserSearch.as_view()),
     path('follow/<username>/', UserFollowingView.as_view({'post': 'follow'})),

@@ -52,6 +52,19 @@ class UserSearchSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    #posts = UserPostSerializer(many=True, read_only=True)
+    #followers = FollowerSerializer(many=True, read_only=True)
+    #following = serializers.StringRelatedField(many=True)
+    #followers = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = get_user_model()
+        lookup_field = "username"
+        fields = ('id', 'username', 'email', 'first_name',
+                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 
+                  #'posts', 'followers','following'
+                  )
+class UserDetailsSerializer(serializers.ModelSerializer):
     posts = UserPostSerializer(many=True, read_only=True)
     #followers = FollowerSerializer(many=True, read_only=True)
     following = serializers.StringRelatedField(many=True)
@@ -60,19 +73,28 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         lookup_field = "username"
-        fields = ('id', 'username', 'email', 'first_name',
-                  'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 'posts', 'followers',
-                  'following')
+        fields = (
+                 'id', 'username', 'email', 'first_name',
+                 'last_name', 'date_of_birth', 'gender', 'profile_photo', 'cover_photo', 'bio', 'city', 
+                  'posts', 
+                  'followers',
+                  'following'
+                  )
 
 
-# class AuthUserSerializer(serializers.ModelSerializer):
-#     posts = UserPostSerializer(many=True)
-#     followers = FollowerSerializer(many=True)
+class AuthUserSerializer(serializers.ModelSerializer):
+    posts = UserPostSerializer(many=True)
+    following = serializers.StringRelatedField(many=True)
+    followers = serializers.StringRelatedField(many=True)
 
-#     class Meta:
-#         model = get_user_model()
-#         lookup_field = "username"
-#         fields = '__all__'
+    class Meta:
+        model = get_user_model()
+        lookup_field = "username"
+        fields = (
+            'posts',
+            'followers',
+            'following'
+        )
 
 
 class CustomRegisterSerializer(RegisterSerializer):

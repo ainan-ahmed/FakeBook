@@ -6,6 +6,7 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.conf.urls.static import static
 from django.conf import settings
+from users.views import AuthUserDetail
 schema_view = get_schema_view(
     openapi.Info(
         title="Blog API",
@@ -23,9 +24,10 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/users/', include('users.urls')),
+    path('api/v1/auth/', include('dj_rest_auth.urls')),
+    path('api/v1/auth/<username>/', AuthUserDetail.as_view()),
     path('api/v1/posts/', include('posts.urls')),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/v1/auth/', include('dj_rest_auth.urls')),
     path('api/v1/auth/registration/',
          include('dj_rest_auth.registration.urls')),
     path('swagger/', schema_view.with_ui(
