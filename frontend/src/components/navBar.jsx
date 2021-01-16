@@ -62,7 +62,7 @@ class NavBar extends Component {
               <Nav className="ml-auto">
                 <NavLink
                   className="nav-item nav-link"
-                  to={"/" + user.username}
+                  to={"/auth/" + user.username}
                   
                 >
                   {user.username}

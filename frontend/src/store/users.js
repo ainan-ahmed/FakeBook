@@ -6,6 +6,7 @@ import {
   logout_user,
   get_user_details,
   registrationEndpoint,
+  get_auth_user_details,
 } from "./endpoints";
 
 const slice = createSlice({
@@ -100,17 +101,39 @@ export default slice.reducer;
 
 //ACTIONs
 //--------------------------------
-export const getUser = (username) => async (dispatch, getState) => {
+export const getAuthUserDetails = (username) => async (dispatch, getState) => {
   dispatch({
     type: detailsRequested.type,
   });
   try {
     //if (!getState().entities.auth.isAuthenticated) {
-      const response = await axios.get(get_user_details + username);
-      dispatch({
-        type: detailsSucceed.type,
-      });
-      return response.data;
+    const response = await axios.get(
+      get_auth_user_details + username,
+      getHeaders(getState)
+    );
+    dispatch({
+      type: detailsSucceed.type,
+    });
+    return response.data;
+    //}
+  } catch (error) {
+    dispatch({
+      type: detailsFailed.type,
+    });
+  }
+};
+//--------------------------------
+export const getUserDetails = (username) => async (dispatch, getState) => {
+  dispatch({
+    type: detailsRequested.type,
+  });
+  try {
+    //if (!getState().entities.auth.isAuthenticated) {
+    const response = await axios.get(get_user_details + username);
+    dispatch({
+      type: detailsSucceed.type,
+    });
+    return response.data;
     //}
   } catch (error) {
     dispatch({
@@ -254,7 +277,7 @@ export const register = (
 
 export const getHeaders = (getState) => {
   const token = getState().auth.token;
-  console.log("token "+ token)
+  console.log("token " + token);
   let config = {
     headers: {
       "Content-Type": "application/json",

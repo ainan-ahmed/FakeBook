@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getUserDetails } from "../store/users";
+import { getAuthUserDetails } from "../store/users";
 import { Container, Col, Spinner, Row, Card } from "react-bootstrap";
 import "../css/style.css";
 import ProfileMenu from "./commons/profileMenu";
 import Post from "./commons/post";
 import ShareBox from "./commons/shareBox";
 import _ from "lodash";
-class Profile extends Component {
+class AuthProfile extends Component {
   state = {
     user: null,
   };
@@ -16,26 +16,27 @@ class Profile extends Component {
     const username = this.props.match.params.username;
     console.log("->>>" + username);
     //let user= null;
-    try {
-      console.log(username);
-      const user = await this.props.getUserDetails(username);
-      //console.log(user);
-      this.setState({ user });
-    } catch (error) {
-      console.log("error while fetching user");
-    }
+   
+      try {
+        console.log(username);
+        const user = await this.props.getAuthUserDetails(username);
+        console.log(user);
+        this.setState({ user });
+      } catch (error) {
+        console.log("error while fetching user");
+      }
   }
 
   render() {
     let { user } = this.state;
     const { auth } = this.props;
-    console.log(user);
     if (!auth.isLoading && user) {
+    console.log(user);
       //console.log(user.username);
       const { posts } = user;
       console.log(posts);
       let cover = {
-        backgroundImage: "url(" + user.cover_photo + ")",
+        backgroundImage: "url(" + auth.user.cover_photo + ")",
         backgroundSize: "cover",
         backgroundPosition: "center center",
         minHeight: 360,
@@ -47,7 +48,7 @@ class Profile extends Component {
           <div className="main-wrapper" style={{ backgroundColor: "#f1f1f1" }}>
             <div className="profile-banner-large bg-img" style={cover}></div>
             <ProfileMenu
-              profile_photo={user.profile_photo}
+              profile_photo={auth.user.profile_photo}
               auth={auth}
               user={user}
             />
@@ -122,6 +123,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 const mapDispatchToProps = (dispatch) => ({
-  getUserDetails: (username) => dispatch(getUserDetails(username)),
+  getAuthUserDetails: (username) => dispatch(getAuthUserDetails(username)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthProfile);

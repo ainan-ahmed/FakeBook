@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import NavBar from "./components/navBar";
 import LoginForm from "./components/loginForm";
 import Logout from "./components/logout";
-import ProtectedRoute from "./components/commons/protectedRoute";
 import Home from "./components/home";
 import RegisterForm from "./components/registerForm";
 import Profile from "./components/profile";
@@ -13,6 +12,9 @@ import EditProfile from './components/editProfile';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchUser from './components/searchUser';
+import ProtectedRoute from './components/commons/protectedRoute';
+import authRoutes from './components/commons/authRoutes';
+import authProfile from "./components/authProfile";
 class App extends Component {
   render() {
     console.log("abcd");
@@ -43,17 +45,20 @@ class App extends Component {
               type="private"
               auth={auth}
             />
+
             <ProtectedRoute
               path="/:username/edit"
-              type="private"
+              type="auth"
               auth={auth}
               component={EditProfile}
             />
-            <Route
-              path="/:username"
+            <ProtectedRoute
+              path="/auth/:username"
+              type="auth"
               auth={auth}
-              component={Profile}
+              component={authProfile}
             />
+            <Route path="/:username" auth={auth} component={Profile} />
             <ProtectedRoute
               path="/"
               type="private"

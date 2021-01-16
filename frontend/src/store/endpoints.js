@@ -4,5 +4,6 @@ export const loginEndpoint = baseURL + "auth/login/";
 export const get_auth_user = baseURL + "auth/user/";
 export const logout_user = baseURL + "auth/logout/";
 export const get_user_details = baseURL + "users/"
+export const get_auth_user_details = baseURL + "auth/"
 export const post_routes = baseURL + "posts/"
 export const search_user = baseURL + "users/"

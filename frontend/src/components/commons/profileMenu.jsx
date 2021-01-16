@@ -8,8 +8,9 @@ class ProfileMenu extends Component {
     
   }
   render() {
-    const { profile_photo, auth, username } = this.props;
+    const { profile_photo, auth, user } = this.props;
     // console.log("object "+ username);
+    console.log(user);
     return (
       <div className="profile-menu-area bg-white">
         <Container>
@@ -17,7 +18,7 @@ class ProfileMenu extends Component {
             <Col lg={3} md={3}>
               <div className="profile-picture-box">
                 <Figure className="profile-picture">
-                  <Link to={{ pathname: "/" + username }}>
+                  <Link to={{ pathname: "/" + auth.user.username }}>
                     <Figure.Image src={profile_photo} alt="profile picture" />
                   </Link>
                 </Figure>
@@ -30,16 +31,16 @@ class ProfileMenu extends Component {
                     <Nav.Item as="li">Timeline</Nav.Item>
                     <Nav.Item as="li">about</Nav.Item>
                     <Nav.Item as="li">photos</Nav.Item>
-                    <Nav.Item as="li">Followers({auth.user.followers.length})</Nav.Item>
+                 <Nav.Item as="li">Followers({user.followers.length})</Nav.Item>
                   </Nav>
                 </div>
               </div>
             </Col>
-            {auth.isAuthenticated && auth.user.username === username && (
+            {auth.isAuthenticated &&  !user.username && auth.user.username && (
               <Col lg={2} md={3} className="d-none d-md-block">
                 <div className="profile-edit-panel">
                   <Button className="edit-btn mt-3" variant="outline-info">
-                    <Link to={"/" + username + "/edit"}>Edit Pofile</Link>
+                    <Link to={"/" + auth.user.username + "/edit"}>Edit Pofile</Link>
                   </Button>
                 </div>
               </Col>

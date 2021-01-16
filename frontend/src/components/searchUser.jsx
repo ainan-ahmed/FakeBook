@@ -4,7 +4,7 @@ import axios from "axios";
 import { search_user } from "../store/endpoints";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser } from "../store/users";
+import { getUserDetails } from "../store/users";
 import "../css/style.css";
 const queryString = require("query-string");
 class SearchUser extends Component {
@@ -85,6 +85,6 @@ class SearchUser extends Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  getUser: (username) => dispatch(getUser(username)),
+  getUserDetails: (username) => dispatch(getUserDetails(username)),
 });
 export default connect(null, mapDispatchToProps)(SearchUser);
