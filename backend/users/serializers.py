@@ -18,7 +18,6 @@ class getUserAndProfilePicture(serializers.ModelSerializer):
 class PostCommentSerializer(serializers.ModelSerializer):
     #posted_by = serializers.StringRelatedField()
     posted_by = getUserAndProfilePicture()
-
     class Meta:
         model = Comment
         fields = ('data_created', 'body', 'posted_by')

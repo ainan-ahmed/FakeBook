@@ -10,4 +10,4 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('body', 'data_created')
+    list_display = ('body', 'data_created','posted_by','post')
