@@ -1,5 +1,5 @@
 # Use an official node runtime as a parent image
-FROM node:12
+FROM node:14
 
 # Set work directory, we can name it whatever we want
 WORKDIR /frontend/code

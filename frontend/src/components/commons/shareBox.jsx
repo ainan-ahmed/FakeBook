@@ -57,7 +57,7 @@ class ShareBox extends Component {
     
     try {
       await this.props.createPost(formData)
-      toast.success("User updated successfully.");
+      toast.success("Post  updated successfully.");
       this.props.getAuthUserInfo();
       //window.location.reload(false)
 
@@ -71,8 +71,8 @@ class ShareBox extends Component {
     return (
       <React.Fragment>
         <Card>
-          <div className="share-content-box w-100 p-2">
-            <Form className="share-text-box" onSubmit={this.handleSubmit}>
+          <div className="w-100 p-2">
+            <Form className="" onSubmit={this.handleSubmit}>
               <Form.Group>
                 <Form.Control
                   as="textarea"
@@ -88,7 +88,8 @@ class ShareBox extends Component {
               <Form.Group>
                 <Form.Label className="fa fa-camera" />
 
-                <Form.File
+                <Form.Control
+                  type="file"
                   label="Add Image"
                   id="custom-file"
                   name="image"
@@ -133,4 +134,4 @@ const mapDispatchToProps = (dispatch) => ({
   createPost: (data) => dispatch(createPost(data)),
   getAuthUserInfo: () => dispatch(getAuthUserInfo())
 }); 
-export default connect(null,mapDispatchToProps)(ShareBox);
+export default connect(null, mapDispatchToProps)(ShareBox);

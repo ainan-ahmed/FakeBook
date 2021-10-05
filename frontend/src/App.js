@@ -15,14 +15,16 @@ import SearchUser from './components/searchUser';
 import ProtectedRoute from './components/commons/protectedRoute';
 import authRoutes from './components/commons/authRoutes';
 import authProfile from "./components/authProfile";
+
 class App extends Component {
   render() {
-    console.log("abcd");
+   // console.log("abcd");
     const { auth } = this.props;
-    console.log(auth);
+   // console.log(auth);
     return (
       <React.Fragment>
         <ToastContainer />
+        
         <NavBar auth={auth} />
         <div className="">
           <Switch>

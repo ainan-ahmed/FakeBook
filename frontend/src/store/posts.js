@@ -27,7 +27,7 @@ export const {
 export default slice.reducer;
 
 export const createPost = data => async (dispatch, getState) => {
-  //console.log("post create requested");
+  console.log("post create requested");
   dispatch({
     type: postCreateRequested.type,
   });

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getUserDetails } from "../store/users";
 import { Container, Col, Spinner, Row, Card } from "react-bootstrap";
-import "../css/style.css";
 import ProfileMenu from "./commons/profileMenu";
 import Post from "./commons/post";
 import ShareBox from "./commons/shareBox";
@@ -38,13 +37,13 @@ class Profile extends Component {
         backgroundImage: "url(" + user.cover_photo + ")",
         backgroundSize: "cover",
         backgroundPosition: "center center",
-        minHeight: 360,
+        minHeight: 350,
         borderRadius: "0 0 4px 4px",
         position: "relative",
       };
       return (
         <React.Fragment>
-          <div className="main-wrapper" style={{ backgroundColor: "#f1f1f1" }}>
+          <div  style={{ backgroundColor: "#f1f1f1" }}>
             <div className="profile-banner-large bg-img" style={cover}></div>
             <ProfileMenu
               profile_photo={user.profile_photo}
@@ -54,8 +53,8 @@ class Profile extends Component {
             <Container>
               <Row>
                 <Col lg={3} order={2}>
-                  <aside className="widget-area profile-sidebar">
-                    <Card className="widget-item">
+                  <aside className=" profile-sidebar">
+                    <Card className="">
                       <Card.Title
                         autoCapitalize="true"
                         className="text-center p-2"

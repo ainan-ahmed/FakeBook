@@ -99,7 +99,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 WSGI_APPLICATION = 'socialMedia.wsgi.application'
 SITE_ID = 1
 
-
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -124,6 +124,7 @@ REST_FRAMEWORK = {
     ],
 
 }
+ 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend"

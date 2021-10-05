@@ -1,64 +1,50 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Image, Button, Card, Figure } from "react-bootstrap";
-import "../../css/style.css";
-import { Link } from 'react-router-dom';
-class Post extends Component {
+import { Image, Button, Card, Figure,Row,Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import PostComment from "./postComment";
+class     Post extends Component {
   render() {
-    const { post } = this.props;
-    console.log(post);
+    const { post, auth } = this.props;
+    console.log(this.props);
     return (
       <React.Fragment>
         <Card className="mt-4 p-2">
           <Card.Title className="allign-items-center d-flex">
-            {post.user.profile_photo && <div className="profile-thumb ml-2">
-              <Figure className="profile-thumb-middle">
-                <Link to={{ pathname: "/" + post.user.username }}>
-                  <Figure.Image
-                    src={post.user.profile_photo}
-                    alt="profile picture"
-                  />
-                </Link>
-              </Figure>
-              {/* <Figure className="profile-thumb-middle">
-                <a href="">
-                  <Image src={post.user.profile_photo} alt="profile picture" />
-                </a>
-              </Figure> */}
-            </div>}
-            <div className="posted-author">
-              <h6 className="author">
-                <Link to={{ pathname: "/" + post.user.username }}>
-                  {post.user.username}
-                </Link>
-              </h6>
-              <span className="post-time ">
-                {moment(post.date_created).format("Do MMMM,YYYY")}
-              </span>
-            </div>
-            <div className="post-settings-bar">
-              <span></span>
-              <span></span>
-              <span></span>
-              <div className="post-settings arrow-shape">
-                <ul>
-                  <li>
-                    <button>copy link to adda</button>
-                  </li>
-                  <li>
-                    <button>edit post</button>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <Row>
+              {post.user.profile_photo && (
+                <Col md={2} className="ms-2">
+                  <Figure className="justify-content-center ">
+                    <Link to={{ pathname: "/" + post.user.username }}></Link>
+                    <Figure.Image
+                      src={post.user.profile_photo}
+                      alt="profile picture"
+                      style={{ borderRadius: 50 }}
+                    />
+                  </Figure>
+                </Col>
+              )}
+              <Col>
+                <h6 className="">
+                  <Link to={{ pathname: "/" + post.user.username }}>
+                    {post.user.username}
+                  </Link>
+                </h6>
+                <div className="" style={{ fontSize: 10, fontWeight: 700 }}>
+                  {moment(post.date_created).format("Do MMMM,YYYY")}
+                </div>
+              </Col>
+            </Row>
           </Card.Title>
           <Card.Body className="post-content">
             <p className="post-desc pb-0">{post.description}</p>
-            {post.image && <div className="post-thumb-gallery">
-              <Figure className="post-thumb img-popup ">
+            {post.image && (
+              <div className="post-thumb-gallery">
+                <Figure className="post-thumb img-popup ">
                   <Image src={post.image} alt="post image" fluid></Image>
-              </Figure>
-            </div>}
+                </Figure>
+              </div>
+            )}
           </Card.Body>
           <Card.Footer className="post-meta">
             <Button className="post-meta-like" variant="light">
@@ -74,6 +60,25 @@ class Post extends Component {
               </Button>
             </div>
           </Card.Footer>
+          <Row className="bg-light p-2">
+            <Col md={2} className="d-flex flex-row align-items-start w-5">
+              
+              <Image src={auth.user.profile_photo} roundedCircle fluid responsive />
+            </Col>
+            <Col class="mt-2 text-right">
+              <textarea className="form-control ml-1 shadow-none textarea"></textarea>
+              <button class="btn btn-primary btn-sm shadow-none" type="button">
+                Post comment
+              </button>
+              {/* <button
+                class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+                type="button"
+              >
+                Cancel
+              </button> */}
+            </Col>
+          </Row>
+          {/* {post.comments.length && post.comments.map(comment => <PostComment comment={comment}/>)} */}
         </Card>
       </React.Fragment>
     );

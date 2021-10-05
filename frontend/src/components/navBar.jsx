@@ -24,26 +24,26 @@ class NavBar extends Component {
     const { isAuthenticated, user } = this.props.auth;
     return (
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Navbar.Brand>
-          <Link to="/">Ainan</Link>
+        <Navbar.Brand as={Link} to="/" className="ms-2 text-info">
+          Fakebook
         </Navbar.Brand>
-        <Form inline className="ml-auto " onSubmit={this.handleSubmit}>
+        <Form inline className="me-auto d-flex" onSubmit={this.handleSubmit}>
           <FormControl
             type="text"
             placeholder="Search"
-            className="mr-sm-2"
+            className="me-sm-2"
             name="search"
             value={this.state.search}
             onChange={this.handleChange}
           />
-          <Button variant="outline-success" type="submit">
+          <Button variant="outline-success text-white" type="submit">
             Search
           </Button>
         </Form>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           {!isAuthenticated && (
-            <Nav className="ml-auto">
+            <Nav className="ms-auto">
               <NavLink className="nav-item nav-link" to="/login">
                 Login
               </NavLink>
@@ -53,17 +53,14 @@ class NavBar extends Component {
             </Nav>
           )}
           {isAuthenticated && user && (
-            <React.Fragment>
-              <Nav className="mr-auto">
+            <React.Fragment className="">
+              <Nav className="ms-auto">
                 <NavLink className="nav-item nav-link" to="/">
                   Home
                 </NavLink>
-              </Nav>
-              <Nav className="ml-auto">
                 <NavLink
                   className="nav-item nav-link"
                   to={"/auth/" + user.username}
-                  
                 >
                   {user.username}
                 </NavLink>

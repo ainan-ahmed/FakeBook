@@ -32,11 +32,10 @@ class UserSearch(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', 'email']
     
-    
 
-    
+
 class AuthUserDetail(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "username"
     queryset = get_user_model().objects.all()
     serializer_class = AuthUserSerializer
-    permission_classes = (IsAuthenticated,IsAuth)
+    permission_classes = (IsAuthenticated, IsAuth)

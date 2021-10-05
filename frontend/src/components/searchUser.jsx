@@ -5,7 +5,6 @@ import { search_user } from "../store/endpoints";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUserDetails } from "../store/users";
-import "../css/style.css";
 const queryString = require("query-string");
 class SearchUser extends Component {
   state = {
@@ -38,6 +37,9 @@ class SearchUser extends Component {
   }
   render() {
     let { data, query } = this.state;
+    console.log(data);
+    const {auth} = this.props
+    console.log(this.props);
     return (
       <Container className="mt-5">
         {!data && (
@@ -55,36 +57,75 @@ class SearchUser extends Component {
         {data &&
           data.length > 0 &&
           data.map((i) => (
-            <Card style={{ border: "1px black solid" }} className="mt-3">
-              <Card.Title className="p-2">
-                {/* <li key={i.username}> */}
-                <Row>
+
+            <Row>
+              <Card
+                border="success"
+                style={{ width: "50rem" }}
+                className="mt-3"
+              >
+                <Card.Title className="p-2">
+                  {/* <li key={i.username}> */}
+                    {i.username !== auth.user.username &&
+                    
+                  <div className="">
                   <Link to={{ pathname: "/" + i.username }} className="ml-5">
-                    <Image
+                    <Card.Img
+                      variant="top"
                       src={i.profile_photo}
                       alt="profile picture"
-                      className="profile-thumb-middle"
+                      className="w-25 float-start"
+                      style={{ height: "100%", width: "auto" }}
+                      fluid
+                      roundedCircle
                     />
                   </Link>
                   <Link
                     to={{ pathname: "/" + i.username }}
-                    className="ml-4 mt-2"
+                    className="ml-4 ms-5 pt-5"
                   >
                     {i.first_name} {i.last_name}
+                    </Link>
+                </div>
+                  }
+                    {i.username === auth.user.username &&
+                    
+                  <div className="">
+                  <Link to={{ pathname: "/auth/" + i.username }} className="ml-5">
+                    <Card.Img
+                      variant="top"
+                      src={i.profile_photo}
+                      alt="profile picture"
+                      className="w-25 float-start"
+                      style={{ height: "100%", width: "auto" }}
+                      fluid
+                      roundedCircle
+                    />
                   </Link>
-                </Row>
-                {/* </li> */}
-              </Card.Title>
-              <Card.Text>
-                {i.city && <p className="ml-5">Lives in {i.city}</p>}
-              </Card.Text>
-            </Card>
+                  <Link
+                    to={{ pathname: "/auth/" + i.username }}
+                    className="ml-4 ms-5 pt-5"
+                  >
+                    {i.first_name} {i.last_name}
+                    </Link>
+                </div>
+                  }
+                  {/* </li> */}
+                </Card.Title>
+                <Card.Text>
+                  {i.city && <p className="ml-5">Lives in {i.city}</p>}
+                </Card.Text>
+              </Card>
+            </Row>
           ))}
       </Container>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
 const mapDispatchToProps = (dispatch) => ({
   getUserDetails: (username) => dispatch(getUserDetails(username)),
 });
-export default connect(null, mapDispatchToProps)(SearchUser);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchUser);

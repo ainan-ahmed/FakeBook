@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAuthUserDetails } from "../store/users";
 import { Container, Col, Spinner, Row, Card } from "react-bootstrap";
-import "../css/style.css";
 import ProfileMenu from "./commons/profileMenu";
 import Post from "./commons/post";
 import ShareBox from "./commons/shareBox";
@@ -20,18 +19,20 @@ class AuthProfile extends Component {
       try {
         console.log(username);
         const user = await this.props.getAuthUserDetails(username);
-        console.log(user);
+        console.log("-//////////////////////");
         this.setState({ user });
       } catch (error) {
+        console.log(error);
         console.log("error while fetching user");
       }
   }
 
   render() {
     let { user } = this.state;
+    console.log("object -............. "+ this.props.auth);
     const { auth } = this.props;
     if (!auth.isLoading && user) {
-    console.log(user);
+    console.log(auth);
       //console.log(user.username);
       const { posts } = user;
       console.log(posts);
@@ -45,7 +46,7 @@ class AuthProfile extends Component {
       };
       return (
         <React.Fragment>
-          <div className="main-wrapper" style={{ backgroundColor: "#f1f1f1" }}>
+          <div className="" style={{ backgroundColor: "#f1f1f1" }}>
             <div className="profile-banner-large bg-img" style={cover}></div>
             <ProfileMenu
               profile_photo={auth.user.profile_photo}
@@ -55,17 +56,17 @@ class AuthProfile extends Component {
             <Container>
               <Row>
                 <Col lg={3} order={2}>
-                  <aside className="widget-area profile-sidebar">
-                    <Card className="widget-item">
+                  <aside className="">
+                    <Card className="">
                       <Card.Title
                         autoCapitalize="true"
                         className="text-center p-2"
                       >
-                        <p className="widget-title">
+                        <p className="">
                           {user.first_name} {user.last_name}
                         </p>
                       </Card.Title>
-                      <Card.Body className="widget-body">
+                      <Card.Body className="">
                         <div className="about-author">
                           <p>
                             Lorem, ipsum dolor sit amet consectetur adipisicing
@@ -97,7 +98,7 @@ class AuthProfile extends Component {
                 </Col>
                 <Col lg={6} order={2}>
                   {auth && <ShareBox auth={auth} />}
-                  {posts && posts.map((post) => <Post post={post} />)}
+                  {posts && posts.map((post) => <Post post={post} auth={auth} />)}
                 </Col>
               </Row>
             </Container>

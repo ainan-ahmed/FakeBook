@@ -254,7 +254,7 @@ class EditProfile extends BaseForm {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.entities.auth,
+  auth: state.auth,
 });
 const mapDispatchToProps = (dispatch) => ({
   updateUser: (data) => dispatch(updateUser(data)),

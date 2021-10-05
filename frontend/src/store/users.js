@@ -196,8 +196,10 @@ export const login = (data) => async (dispatch, getState) => {
     dispatch(getAuthUserInfo());
     //console.log("HELLO");
   } catch (error) {
+    console.log(error.response.data);
     dispatch({
       type: loginFailed.type,
+      payload: error.response.data
     });
   }
 };
@@ -267,6 +269,7 @@ export const register = (
     });
     dispatch(getAuthUserInfo());
   } catch (error) {
+    console.log(error);
     dispatch({
       type: registerFailed.type,
     });

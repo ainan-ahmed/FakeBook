@@ -4,30 +4,32 @@ import BaseForm from "./commons/baseForm";
 import { Form, Button, Alert, Container } from "react-bootstrap";
 import { login } from "../store/users";
 import { connect } from "react-redux";
-
 class LoginForm extends BaseForm {
   state = {
     data: { email: "", password: "" },
-    errors: {},
+    errors: {
+      email: null,
+      password: null,
+      non_field_error: null,
+    },
   };
   schema = {
     email: Joi.string().required().label("Email"),
     password: Joi.string().required().label("Password"),
   };
   submitToServer = async () => {
+    const { data } = this.state;
+    const response = await this.props.login(data);
+    console.log(response);
     try {
-      const { data } = this.state;
-      await this.props.login(data);
-      //console.log(this.props);
       this.props.history.push("/");
       //const { state } = this.props.location;
       //window.location = state ? state.from.pathname : "/";
       console.log("logged in");
     } catch (error) {
-      console.log("asdfsdaf   ->"+error); 
-      if (error.response) {
-        console.log("serverError");
-
+      console.log("asdfsdaf   -->"+error); 
+      if (error) {
+        console.log("serverError" + response);
         let errors = { ...this.state.errors };
         const serverError = error.response.data;
         console.log(serverError);
@@ -45,6 +47,7 @@ class LoginForm extends BaseForm {
         <h1>Login Form</h1>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
+            
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"

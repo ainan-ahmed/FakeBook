@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.css";
 import configureStore from "./store/configureStore";
 import { Provider } from "react-redux";
@@ -15,6 +15,7 @@ const store = configureStore();
 let persistor = persistStore(store);
 ReactDOM.render(
   // <React.StrictMode>
+  
   <BrowserRouter >
     <Provider store={store}>
       <PersistGate loading={<Spinner />} persistor={persistor}>
