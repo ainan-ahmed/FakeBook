@@ -7,6 +7,8 @@ import {
   get_user_details,
   registrationEndpoint,
   get_auth_user_details,
+  follow_user,
+  unfollow_user,
 } from "./endpoints";
 
 const slice = createSlice({
@@ -80,6 +82,9 @@ const slice = createSlice({
       state.token = null;
       state.user = null;
     },
+    followUnfollowError: (state, action) => {
+      state.isLoading = false;
+    },
   },
 });
 export const {
@@ -96,6 +101,7 @@ export const {
   detailsRequested,
   detailsFailed,
   detailsSucceed,
+  followUnfollowError,
 } = slice.actions;
 export default slice.reducer;
 
@@ -136,6 +142,7 @@ export const getUserDetails = (username) => async (dispatch, getState) => {
     return response.data;
     //}
   } catch (error) {
+    console.log(error.response);
     dispatch({
       type: detailsFailed.type,
     });
@@ -168,20 +175,6 @@ export const login = (data) => async (dispatch, getState) => {
   dispatch({
     type: loginRequested.type,
   });
-
-  // dispatch(apiCallBegan({
-  //   url: loginEndpoint,
-  //   method: 'post',
-  //   data,
-  //   onStart: loginRequested.type,
-  //   onSuccess: loginSucceed.type,
-  //   onError: loginFailed.type
-  // }))
-  // console.log(getState().entities.auth);
-  // if (getState().entities.auth.isAuthenticated)
-  // {
-  //   dispatch(getAuthUserInfo());
-  // }
   try {
     const response = await axios.post(loginEndpoint, data);
     // const headers = getHeaders(getState)
@@ -192,14 +185,12 @@ export const login = (data) => async (dispatch, getState) => {
       payload: response.data,
     });
 
-    //console.log("HELLO");
     dispatch(getAuthUserInfo());
-    //console.log("HELLO");
   } catch (error) {
     console.log(error.response.data);
     dispatch({
       type: loginFailed.type,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 };
@@ -233,48 +224,76 @@ export const updateUser = (data) => async (dispatch, getState) => {
     });
   }
 };
-
-//---------------------------------
-
-export const register = (
-  email,
-  first_name,
-  last_name,
-  password1,
-  password2,
-  date_of_birth,
-  gender
-) => async (dispatch, getState) => {
-  const body = JSON.stringify({
-    email,
-    first_name,
-    last_name,
-    password1,
-    password2,
-    date_of_birth,
-    gender,
-  });
-  dispatch({
-    type: registerRequested.type,
-  });
+//-----------------------------
+export const followUser = (username) => async (dispatch, getState) => {
   try {
     const response = await axios.post(
-      registrationEndpoint,
-      body,
+      follow_user + username + "/", {},
       getHeaders(getState)
     );
-    dispatch({
-      type: registerSucceed.type,
-      payload: response.data,
-    });
-    dispatch(getAuthUserInfo());
+    console.log("response");
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
+
     dispatch({
-      type: registerFailed.type,
+      type: followUnfollowError.type,
+      payload: error.response.data,
     });
   }
 };
+//-----------------------------
+export const unfollowUser = (username) => async (dispatch, getState) => {
+  try {
+    console.log(getHeaders(getState));
+    console.log(unfollow_user+username+ "/");
+    const response = await axios.post(
+      unfollow_user + username + "/", {},
+      getHeaders(getState)
+    );
+    console.log("response");
+  } catch (error) {
+    console.log(error.response.data);
+    dispatch({
+      type: followUnfollowError.type,
+      payload: error.response.data,
+    });
+  }
+};
+//---------------------------------
+
+export const register =
+  (email, first_name, last_name, password1, password2, date_of_birth, gender) =>
+  async (dispatch, getState) => {
+    const body = JSON.stringify({
+      email,
+      first_name,
+      last_name,
+      password1,
+      password2,
+      date_of_birth,
+      gender,
+    });
+    dispatch({
+      type: registerRequested.type,
+    });
+    try {
+      const response = await axios.post(
+        registrationEndpoint,
+        body,
+        getHeaders(getState)
+      );
+      dispatch({
+        type: registerSucceed.type,
+        payload: response.data,
+      });
+      dispatch(getAuthUserInfo());
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: registerFailed.type,
+      });
+    }
+  };
 
 //----------------------------------
 

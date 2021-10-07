@@ -19,7 +19,7 @@ class AuthProfile extends Component {
       try {
         console.log(username);
         const user = await this.props.getAuthUserDetails(username);
-        console.log("-//////////////////////");
+        console.log("-//////////////////////" + user);
         this.setState({ user });
       } catch (error) {
         console.log(error);
@@ -49,6 +49,7 @@ class AuthProfile extends Component {
           <div className="" style={{ backgroundColor: "#f1f1f1" }}>
             <div className="profile-banner-large bg-img" style={cover}></div>
             <ProfileMenu
+              {...this.props}
               profile_photo={auth.user.profile_photo}
               auth={auth}
               user={user}

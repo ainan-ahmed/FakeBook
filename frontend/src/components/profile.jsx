@@ -9,6 +9,7 @@ import _ from "lodash";
 class Profile extends Component {
   state = {
     user: null,
+    following: false,
   };
   async componentDidMount() {
     console.log("Mount called");
@@ -24,7 +25,6 @@ class Profile extends Component {
       console.log("error while fetching user");
     }
   }
-
   render() {
     let { user } = this.state;
     const { auth } = this.props;
@@ -43,9 +43,10 @@ class Profile extends Component {
       };
       return (
         <React.Fragment>
-          <div  style={{ backgroundColor: "#f1f1f1" }}>
+          <div style={{ backgroundColor: "#f1f1f1" }}>
             <div className="profile-banner-large bg-img" style={cover}></div>
             <ProfileMenu
+              {...this.props}
               profile_photo={user.profile_photo}
               auth={auth}
               user={user}
@@ -53,7 +54,7 @@ class Profile extends Component {
             <Container>
               <Row>
                 <Col lg={3} order={2}>
-                  <aside className=" profile-sidebar">
+                  <aside className="mt-2">
                     <Card className="">
                       <Card.Title
                         autoCapitalize="true"
@@ -94,7 +95,7 @@ class Profile extends Component {
                   </aside>
                 </Col>
                 <Col lg={6} order={2}>
-                  {auth && <ShareBox auth={auth} />}
+                  {auth && this.props.match.username === auth &&  <ShareBox auth={auth} />}
                   {posts && posts.map((post) => <Post post={post} />)}
                 </Col>
               </Row>

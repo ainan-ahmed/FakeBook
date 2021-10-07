@@ -1,20 +1,38 @@
 import React, { Component } from "react";
 import { Container, Col, Row, Button, Figure, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-class ProfileMenu extends Component {
+import _ from "lodash";
+import { connect } from "react-redux";
+import { followUser, unfollowUser } from "../../store/users";
 
-  handleFollowUnFollow = () => {
-    
+class ProfileMenu extends Component {
+  state = {
+    following: false,
+  };
+  async componentDidMount() {
+     if (_.includes(this.props.user.followers, this.props.auth.user.username))
+       this.setState({ following: true });
+     else this.setState({ following: false });
   }
+  handleFollowUnFollow =  () => {
+    console.log("Clicked");
+    if (!this.state.following)
+       this.props.followUser(this.props.user.username);
+    else
+       this.props.unfollowUser(this.props.user.username);
+    window.location.reload();
+  };
+  
   render() {
     const { profile_photo, auth, user } = this.props;
     // console.log("object "+ username);
-    console.log(user);
+    console.log(this.props);
+    console.log("object -_-    "+this.state.following);
     return (
-      <div className="bg-white">
+      <div className="bg-white mb-3">
         <Container>
           <Row className="align-items-center">
-            <Col lg={2} md={3}>
+            <Col xs={2} md={3}>
               <div className="mt-2">
                 <Figure className="mh-100">
                   <Link to={{ pathname: "/" + auth.user.username }}>
@@ -27,8 +45,13 @@ class ProfileMenu extends Component {
                 </Figure>
               </div>
             </Col>
-            <Col lg={6} md={6} className="">
-              <Nav className="justify-content-center" as="ul" variant="pills">
+            <Col >
+              <Nav
+                variant="pills"
+                justify
+                className="justify-content-center"
+                as="ul"
+              >
                 <Nav.Item as="li">
                   <Nav.Link>
                     <Link to={"/login"}>Timeline</Link>
@@ -45,14 +68,30 @@ class ProfileMenu extends Component {
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Nav.Link to={"/login"}>
-                    <Link>Followers({user.followers.length})</Link>
+                  <Nav.Link
+                    //to={{ "/" + this.props.match.params.username + "/followers"}}
+                  >
+                    <Link to = {"/" + this.props.match.params.username + "/followers"}>Followers({user.followers.length})</Link>
                   </Nav.Link>
                 </Nav.Item>
+                {/* <Nav.Item as="li">
+                  <Nav.Link
+                    to={"/" + this.props.match.params.username + "/following"}
+                  >
+                    <Link>Following({user.following.length})</Link>
+                  </Nav.Link>
+                </Nav.Item> */}
+                {this.props.match.params.username !== auth.user.username && (
+                  <Nav.Item as="li">
+                    <Button variant="info" onClick={this.handleFollowUnFollow}>
+                      {this.state.following ? "Unfollow" : "Follow"}
+                    </Button>
+                  </Nav.Item>
+                )}
               </Nav>
             </Col>
             {auth.isAuthenticated && !user.username && auth.user.username && (
-              <Col lg={2} md={3} className="d-none d-md-block  ms-auto">
+              <Col xs={2}   className="  ms-auto">
                 <div className="">
                   <Button className="text-black" variant="info">
                     <Link to={"/" + auth.user.username + "/edit"}>
@@ -71,4 +110,8 @@ class ProfileMenu extends Component {
   }
 }
 
-export default ProfileMenu;
+const mapDispatchToProps = (dispatch) => ({
+  followUser: (username) => dispatch(followUser(username)),
+  unfollowUser: (username) => dispatch(unfollowUser(username)),
+});
+export default connect(null, mapDispatchToProps)(ProfileMenu);

@@ -15,6 +15,8 @@ import SearchUser from './components/searchUser';
 import ProtectedRoute from './components/commons/protectedRoute';
 import authRoutes from './components/commons/authRoutes';
 import authProfile from "./components/authProfile";
+import Followers from './components/followers';
+import Following from './components/following';
 
 class App extends Component {
   render() {
@@ -60,6 +62,8 @@ class App extends Component {
               auth={auth}
               component={authProfile}
             />
+            <Route path="/:username/followers" auth={auth} component={Followers} />
+            <Route path="/:username/following" auth={auth} component={Following} />
             <Route path="/:username" auth={auth} component={Profile} />
             <ProtectedRoute
               path="/"

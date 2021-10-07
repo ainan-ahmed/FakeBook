@@ -7,3 +7,5 @@ export const get_user_details = baseURL + "users/"
 export const get_auth_user_details = baseURL + "auth/"
 export const post_routes = baseURL + "posts/"
 export const search_user = baseURL + "users/"
+export const follow_user = baseURL + "users/follow/";
+export const unfollow_user = baseURL + "users/unfollow/";
