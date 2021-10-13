@@ -19,6 +19,11 @@ class RegisterForm extends BaseForm {
     },
     errors: {},
   };
+  componentDidUpdate(prevProps) {
+    if (this.props.error.msg !== prevProps.error.msg) {
+      this.setState({ errors: this.props.error.msg });
+    }
+  }
   schema = {
     email: Joi.string().required().email().label("Email"),
     first_name: Joi.string().required().label("First name"),
@@ -58,7 +63,7 @@ class RegisterForm extends BaseForm {
       );
       //localStorage.setItem("token", token["key"]);
       //window.location = "/";
-      this.props.history.push("/");
+      if (this.props.auth.isAuthenticated) this.props.history.push("/");
     } catch (error) {
       let errors = { ...this.state.errors };
       const serverError = error.response.data;
@@ -137,7 +142,11 @@ class RegisterForm extends BaseForm {
 
           <Form.Group>
             <Form.Label>Date of Birth</Form.Label>
-            <Form.Control type="date" name="date_of_birth" onChange={this.handleChange}/>
+            <Form.Control
+              type="date"
+              name="date_of_birth"
+              onChange={this.handleChange}
+            />
             {errors.date_of_birth && (
               <Alert variant={"danger"}>{errors.date_of_birth}</Alert>
             )}
@@ -170,6 +179,9 @@ class RegisterForm extends BaseForm {
           <Form.Group>
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>
+          {errors.non_field_errors && (
+            <Alert variant={"danger"}>{errors.non_field_errors.join()}</Alert>
+          )}
           <Button variant="primary" type="submit">
             Submit
           </Button>
@@ -178,6 +190,10 @@ class RegisterForm extends BaseForm {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  error: state.errors,
+  auth: state.auth,
+});
 const mapDispatchToProps = (dispatch) => ({
   register: (
     email,
@@ -200,4 +216,4 @@ const mapDispatchToProps = (dispatch) => ({
       )
     ),
 });
-export default connect(null, mapDispatchToProps)(RegisterForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

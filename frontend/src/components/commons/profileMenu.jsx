@@ -38,9 +38,7 @@ class ProfileMenu extends Component {
                   <Link
                     to={
                       "/" +
-                      (user.username === auth.user.username
-                        ? "auth/"
-                        : "") +
+                      (user.username === auth.user.username ? "auth/" : "") +
                       (user.username === auth.user.username
                         ? auth.user.username
                         : user.username)
@@ -63,24 +61,22 @@ class ProfileMenu extends Component {
                 as="ul"
               >
                 <Nav.Item as="li">
-                  <Nav.Link>
+                  <Nav.Link eventKey="disabled" disabled>
                     <Link to={"/login"}>Timeline</Link>
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Nav.Link>
+                  <Nav.Link eventKey="disabled" disabled>
                     <Link to={"/login"}>about</Link>
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Nav.Link to={"/login"}>
-                    <Link>photos</Link>
+                  <Nav.Link eventKey="disabled" disabled>
+                    <Link to={"/login"}>photos</Link>
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item as="li">
-                  <Nav.Link
-                  //to={{ "/" + this.props.match.params.username + "/followers"}}
-                  >
+                  <Nav.Link>
                     <Link
                       to={"/" + this.props.match.params.username + "/followers"}
                     >

@@ -10,6 +10,7 @@ import {
   follow_user,
   unfollow_user,
 } from "./endpoints";
+import { addError } from "./errors";
 
 const slice = createSlice({
   name: "users",
@@ -187,10 +188,9 @@ export const login = (data) => async (dispatch, getState) => {
 
     dispatch(getAuthUserInfo());
   } catch (error) {
-    console.log(error.response.data);
+    dispatch(addError(error.response.data, error.response.status));
     dispatch({
       type: loginFailed.type,
-      payload: error.response.data,
     });
   }
 };
@@ -203,6 +203,7 @@ export const logout = () => async (dispatch, getState) => {
       type: logoutSucceed.type,
     });
   } catch (error) {
+    dispatch(addError(error.response.data, error.response.status));
     console.log("logout error");
   }
 };
@@ -219,6 +220,7 @@ export const updateUser = (data) => async (dispatch, getState) => {
       payload: response.data,
     });
   } catch (error) {
+    dispatch(addError(error.response.data, error.response.status));
     dispatch({
       type: detailsFailed.type,
     });
@@ -288,7 +290,8 @@ export const register =
       });
       dispatch(getAuthUserInfo());
     } catch (error) {
-      console.log(error);
+      dispatch(addError(error.response.data, error.response.status));
+      console.log(error.response);
       dispatch({
         type: registerFailed.type,
       });

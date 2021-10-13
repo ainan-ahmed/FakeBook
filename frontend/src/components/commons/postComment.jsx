@@ -36,7 +36,7 @@ class PostComment extends Component {
             <Row>
               <Col>
                 <div className="ms-5 border border-dark align-items-end">
-                  {comment.body}{" "}
+                  {comment.body} 
                 </div>
               </Col>
             </Row>
