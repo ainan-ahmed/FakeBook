@@ -3,7 +3,7 @@ import { Row,Col } from 'react-bootstrap';
 import ProfileMenu from './commons/profileMenu';
 import { connect } from 'react-redux';
 
- 
+
 class Home extends Component {
     state = {  }
     render() { 
