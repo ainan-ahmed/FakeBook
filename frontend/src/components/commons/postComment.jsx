@@ -1,44 +1,46 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Figure } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
+import { Col,Row,Image,Card } from 'react-bootstrap';
 class PostComment extends Component {
     state = {  }
     render() { 
-        const {comment} = this.props
+      const { comment } = this.props
+      console.log(comment);
         return (
-          <Row>
-            <div
-                    className="bg-secondary mt-2 " width="auto"
-            >
-              <Col>
+          <div className="mt-2  ">
+            <Row>
+              <Col md={2}>
                 {comment.posted_by.profile_photo && (
-                  <div className="profile-thumb ml-2">
-                    <Figure className="profile-thumb-middle">
-                      <Link to={{ pathname: "/" + comment.posted_by.username }}>
-                        <Figure.Image
-                          src={comment.posted_by.profile_photo}
-                          alt="profile picture"
-                        />
-                      </Link>
-                    </Figure>
+                  <div className="d-flex align-items-start">
+                    <Link to={{ pathname: "/" + comment.posted_by.username }}>
+                      <Image
+                        src={comment.posted_by.profile_photo}
+                        alt="profile picture"
+                        fluid
+                        roundedCircle
+                      />
+                    </Link>
                   </div>
                 )}
-                <div className="posted-author">
-                  <h6 className="author">
+              </Col>
+              <Col md={2}>
+                <div className="d-flex mt-3 align-items-start ">
+                  <h6 className="">
                     <Link to={{ pathname: "/" + comment.posted_by.username }}>
                       {comment.posted_by.username}
                     </Link>
                   </h6>
                 </div>
               </Col>
-
+            </Row>
+            <Row>
               <Col>
-                <div className="post-content">{comment.body}</div>
+                <div className="ms-5 border border-dark align-items-end">
+                  {comment.body}{" "}
+                </div>
               </Col>
-            </div>
-          </Row>
+            </Row>
+          </div>
         );
     }
 }

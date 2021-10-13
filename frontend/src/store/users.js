@@ -311,3 +311,17 @@ export const getHeaders = (getState) => {
   //console.log("config ->> "+ config)
   return config;
 };
+export const getFileHeaders = (getState) => {
+  const token = getState().auth.token;
+  //console.log("token " + token);
+  let config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  if (token) {
+    config.headers["Authorization"] = "Token " + token;
+  }
+  //console.log("config ->> "+ config)
+  return config;
+};

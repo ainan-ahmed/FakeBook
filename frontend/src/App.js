@@ -51,7 +51,7 @@ class App extends Component {
             />
 
             <ProtectedRoute
-              path="/:username/edit"
+              path="/auth/:username/edit"
               type="auth"
               auth={auth}
               component={EditProfile}

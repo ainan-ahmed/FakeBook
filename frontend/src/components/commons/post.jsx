@@ -61,7 +61,7 @@ class     Post extends Component {
             </div>
           </Card.Footer>
           <Row className="bg-light p-2">
-            <Col md={2} className="d-flex flex-row align-items-start w-5">
+            <Col md={2} className="d-flex flex-row align-items-start w-5  ">
               
               <Image src={auth.user.profile_photo} roundedCircle fluid responsive />
             </Col>
@@ -78,7 +78,7 @@ class     Post extends Component {
               </button> */}
             </Col>
           </Row>
-          {/* {post.comments.length && post.comments.map(comment => <PostComment comment={comment}/>)} */}
+           {post.comments.length && post.comments.map(comment => <PostComment comment={comment}/>)} 
         </Card>
       </React.Fragment>
     );

@@ -28,8 +28,8 @@ class Followers extends React.Component {
     }
     render() {
         const { user, isAuth } = this.state;
-        console.log(user, isAuth);
         const { auth } = this.props;
+        console.log(user, auth.user.username);
         //  const { following } = user.following;
         // const { followers } = user.followers;
         if (!auth.isLoading && user) {
@@ -84,7 +84,15 @@ class Followers extends React.Component {
                                   textAlign: "center",
                                 }}
                               >
-                                <Link to={"/" + user}>
+                                <Link
+                                  to={
+                                    "/" +
+                                    (user === auth.user.username
+                                      ? "auth/"
+                                      : "") +
+                                    user
+                                  }
+                                >
                                   <Button variant="outline-success">
                                     View Profile
                                   </Button>
@@ -102,7 +110,8 @@ class Followers extends React.Component {
                       <Card.Body>
                         <Card.Title className="p-4  text-center font-weight-bold">
                           <h2 className="">
-                            {user.username} is Following {user.following.length} people.
+                            {user.username} is Following {user.following.length}{" "}
+                            people.
                           </h2>
                         </Card.Title>
                         {user.following.map((user) => (
@@ -124,7 +133,15 @@ class Followers extends React.Component {
                                     textAlign: "center",
                                   }}
                                 >
-                                  <Link to={"/" + user}>
+                                  <Link
+                                    to={
+                                      "/" +
+                                      (user === auth.user.username
+                                        ? "auth/"
+                                        : "") +
+                                      user
+                                    }
+                                  >
                                     <Button variant="outline-success">
                                       View Profile
                                     </Button>

@@ -35,7 +35,17 @@ class ProfileMenu extends Component {
             <Col xs={2} md={3}>
               <div className="mt-2">
                 <Figure className="mh-100">
-                  <Link to={{ pathname: "/" + auth.user.username }}>
+                  <Link
+                    to={
+                      "/" +
+                      (user.username === auth.user.username
+                        ? "auth/"
+                        : "") +
+                      (user.username === auth.user.username
+                        ? auth.user.username
+                        : user.username)
+                    }
+                  >
                     <Figure.Image
                       src={profile_photo}
                       alt="profile picture"
@@ -45,7 +55,7 @@ class ProfileMenu extends Component {
                 </Figure>
               </div>
             </Col>
-            <Col >
+            <Col>
               <Nav
                 variant="pills"
                 justify
@@ -69,9 +79,13 @@ class ProfileMenu extends Component {
                 </Nav.Item>
                 <Nav.Item as="li">
                   <Nav.Link
-                    //to={{ "/" + this.props.match.params.username + "/followers"}}
+                  //to={{ "/" + this.props.match.params.username + "/followers"}}
                   >
-                    <Link to = {"/" + this.props.match.params.username + "/followers"}>Followers({user.followers.length})</Link>
+                    <Link
+                      to={"/" + this.props.match.params.username + "/followers"}
+                    >
+                      Followers({user.followers.length})
+                    </Link>
                   </Nav.Link>
                 </Nav.Item>
                 {/* <Nav.Item as="li">
@@ -91,7 +105,7 @@ class ProfileMenu extends Component {
               </Nav>
             </Col>
             {auth.isAuthenticated && !user.username && auth.user.username && (
-              <Col xs={2}   className="  ms-auto">
+              <Col xs={2} className="  ms-auto">
                 <div className="">
                   <Button className="text-black" variant="info">
                     <Link to={"/" + auth.user.username + "/edit"}>

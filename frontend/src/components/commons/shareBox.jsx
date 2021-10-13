@@ -15,6 +15,7 @@ class ShareBox extends Component {
     }
     //showModal: false,
   };
+  baseState = this.state;
   // handleModalToggle = () => {
   //   const ff = this.state.showModal ? false : true;
   //   this.setState({ showModal: ff });
@@ -56,10 +57,12 @@ class ShareBox extends Component {
     formData.set("image", data["image"])
     
     try {
-      await this.props.createPost(formData)
+      const response = await this.props.createPost(formData);
+      console.log(response);
       toast.success("Post  updated successfully.");
       this.props.getAuthUserInfo();
-      //window.location.reload(false)
+      //this.setState(this.baseState)
+      window.location.reload(false)
 
     } catch (error) {
       console.log("FAILED");
@@ -95,6 +98,7 @@ class ShareBox extends Component {
                   name="image"
                   onChange={this.handleImageChange}
                   custom
+                  required  
                 />
                 <img src={this.state.imagePreviewUrl} alt="" className="w-25 h-25" />
               </Form.Group>

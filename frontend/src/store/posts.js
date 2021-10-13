@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios  from "axios";
 import { post_routes } from "./endpoints";
+import { getFileHeaders, getHeaders } from "./users";
 
 const slice = createSlice({
   name: "posts",
@@ -31,39 +32,8 @@ export const createPost = data => async (dispatch, getState) => {
   dispatch({
     type: postCreateRequested.type,
   });
-  console.log(data);
-  try {
-    const response = await axios.post(post_routes,data, getFileHeaders(getState));
-    
-    dispatch({
-      type: postCreateSucceed.type,
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch({
-      type: postCreateFailed.type,
-    });
-  }
-};
-
-//---------------------------
-export const getHeaders = (getState) => {
-  const token = getState().entities.auth.token;
-  //console.log("token " + token);
-  let config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  if (token) {
-    config.headers["Authorization"] = "Token " + token;
-  }
-  //console.log("config ->> "+ config)
-  return config;
-};
-
-export const getFileHeaders = getState => {
-  const token = getState().entities.auth.token;
+  
+  const token = getState().auth.token;
   //console.log("token " + token);
   let config = {
     headers: {
@@ -74,5 +44,23 @@ export const getFileHeaders = getState => {
     config.headers["Authorization"] = "Token " + token;
   }
   //console.log("config ->> "+ config)
-  return config;
-}
+  
+  try {
+    console.log(data);
+    const response = await axios.post(post_routes,data,config);
+    
+    dispatch({  
+      type: postCreateSucceed.type,
+      payload: response.data
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: postCreateFailed.type,
+    });
+  }
+};
+
+ 
+
+
